@@ -1,4 +1,6 @@
 Watch1t::Application.routes.draw do
+  resources :seasons
+
   resources :series
 
   # The priority is based upon order of creation: first created -> highest priority.
