@@ -1,4 +1,6 @@
 Watch1t::Application.routes.draw do
+  resources :episodes
+
   resources :seasons
 
   resources :series
