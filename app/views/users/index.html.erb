@@ -1,9 +1,22 @@
-
-<%= form_tag("/users/login", method: "post",id:"register") do %>
-	<%= label_tag(:user, "UserName:") %>
-	<%= text_field_tag(:user,"",:required => true) %><br>
-	<%= label_tag(:password, "Password:") %>
-	<%= password_field_tag(:password,"",:required => true) %><br>
-	<%= submit_tag("Login") %>
-	<a href="/users/new"><button>Register</button></a>
-<%end%>
+<%content_for :user_panel do%> 
+	<%if session[:user_id].nil?%>
+		<p id="notice"><%= notice %></p>
+		<%= form_tag("/users/login", method: "post",id:"login") do %>
+			<%= label_tag(:user, "UserName:") %>
+			<%= text_field_tag(:user,"",:required => true) %><br>
+			<%= label_tag(:password, "Password:") %>
+			<%= password_field_tag(:password,"",:required => true) %><br>
+			<%= submit_tag("Login") %>
+			<a href="/users/register"><button>Register</button></a>
+		<%end%>
+	<%else%>
+		<h1>Welcome <%=User.where(id: session[:user_id]).take.user%></h1>
+		<ul class="menu">
+			<li><a href="">Link 1</a></li>
+			<li><a href="">Link 2</a></li>
+			<li><a href="/users/edit">Edit Account</a></li>
+			<li><a href="/users/destroy">Delete Account</a></li>
+			<li><a href="/users/logout">LogOut</a></li>
+		</ul>
+	<%end%>
+<% end %>

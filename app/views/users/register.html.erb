@@ -1,20 +1,20 @@
 <p id="notice"><%= notice %></p>
-<%= form_tag("/users/update", method: "post",id:"register") do %>
+<%= form_tag("create", method: "post",id:"register") do %>
 	<%= label_tag(:user, "UserName:") %>
-	<%= text_field_tag(:user,"",:value => @logged_user.user) %><br>
+	<%= text_field_tag(:user,"",:required => true) %><br>
 	<%= label_tag(:password, "Password:") %>
-	<%= password_field_tag(:password,"",:value => @logged_user.password) %><br>
+	<%= password_field_tag(:password,"",:required => true) %><br>
 	<%= label_tag(:email, "E-Mail:") %>
-	<%= email_field_tag(:email,"",:value => @logged_user.email) %><br>
+	<%= email_field_tag(:email,"",:required => true) %><br>
 	<%= label_tag(:secret_question, "Secret Question:") %>
-	<%= text_field_tag(:secret_question,"",:value => @logged_user.secret_question) %><br>
+	<%= text_field_tag(:secret_question,"",:required => true) %><br>
 	<%= label_tag(:secret_answer, "Secret Answer:") %>
-	<%= text_field_tag(:secret_answer,"",:value => @logged_user.secret_answer) %><br>
-	<%= label_tag(:skype, "Skype:",:value => @logged_user.skype) %>
+	<%= text_field_tag(:secret_answer,"",:required => true) %><br>
+	<%= label_tag(:skype, "Skype:") %>
 	<%= text_field_tag(:skype) %><br>
 	<%= label_tag(:country, "Country:") %>
 	<select name="country" id="country">
-		<option value="<%=@logged_user.country%>"><%=@logged_user.country%></option>
+		<option value="">-- Select --</option>
 		<option value="Afghanistan">Afghanistan</option>
 		<option value="Albania">Albania</option>
 		<option value="Algeria">Algeria</option>
@@ -255,5 +255,5 @@
 		<option value="British Virgin Islands">British Virgin Islands</option>
 	</select><br>
 	<p>By registration you agree with <a href="">Terms of Agreement</a>! </p><br>
-	<%= submit_tag("Edit") %>
+	<%= submit_tag("Register") %>
 <% end %>
