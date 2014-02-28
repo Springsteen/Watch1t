@@ -11,3 +11,32 @@
  *= require_self
  *= require_tree .
  */
+*{
+	color:white;
+	font-size:16px;
+	font-family: verdana, arial, helvetica, sans-serif;
+}
+body{
+	background-color:black;
+	text-align:center;
+}
+input,select,textarea,button{
+	color:LightCyan;
+	background-color:grey;
+	border-radius:5px;
+	border:2px solid white;
+}
+input:focus{
+	border:2px solid lightgreen;
+}
+input[type="submit"],button{
+	border-radius:20px;
+	border:2px solid white;
+	border-bottom-width:4px;
+}
+input[type="submit"]:hover,button:hover{
+	border:3px solid LightGreen;
+}
+#register textarea{
+	resize:none;	
+}

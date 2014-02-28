@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140222112223) do
+ActiveRecord::Schema.define(version: 20140225213630) do
 
   create_table "episodes", force: true do |t|
     t.string   "title"
@@ -30,6 +30,20 @@ ActiveRecord::Schema.define(version: 20140222112223) do
   create_table "series", force: true do |t|
     t.string   "title"
     t.string   "year"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "users", force: true do |t|
+    t.string   "user",            limit: 10, null: false
+    t.binary   "password",                   null: false
+    t.string   "email",                      null: false
+    t.boolean  "email_check",                null: false
+    t.string   "secret_question",            null: false
+    t.string   "secret_answer",              null: false
+    t.string   "skype"
+    t.string   "country"
+    t.integer  "block_code",                 null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

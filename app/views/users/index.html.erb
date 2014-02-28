@@ -1,0 +1,9 @@
+
+<%= form_tag("/users/login", method: "post",id:"register") do %>
+	<%= label_tag(:user, "UserName:") %>
+	<%= text_field_tag(:user,"",:required => true) %><br>
+	<%= label_tag(:password, "Password:") %>
+	<%= password_field_tag(:password,"",:required => true) %><br>
+	<%= submit_tag("Login") %>
+	<a href="/users/new"><button>Register</button></a>
+<%end%>

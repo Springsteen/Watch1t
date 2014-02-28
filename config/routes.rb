@@ -1,10 +1,14 @@
 Watch1t::Application.routes.draw do
+  resources :users
+
   resources :episodes
 
   resources :seasons
 
   resources :series
-
+	
+  match 'users/login', :controller => 'login', via: [:post]
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
