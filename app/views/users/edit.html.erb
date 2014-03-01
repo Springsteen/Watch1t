@@ -10,8 +10,8 @@
 	<%= text_field_tag(:secret_question,"",:value => @logged_user.secret_question) %><br>
 	<%= label_tag(:secret_answer, "Secret Answer:") %>
 	<%= text_field_tag(:secret_answer,"",:value => @logged_user.secret_answer) %><br>
-	<%= label_tag(:skype, "Skype:",:value => @logged_user.skype) %>
-	<%= text_field_tag(:skype) %><br>
+	<%= label_tag(:skype, "Skype:") %>
+	<%= text_field_tag(:skype,"",:value => @logged_user.skype) %><br>
 	<%= label_tag(:country, "Country:") %>
 	<select name="country" id="country">
 		<option value="<%=@logged_user.country%>"><%=@logged_user.country%></option>
