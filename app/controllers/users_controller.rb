@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   before_action :set_user
   @logged_user
   require 'digest/md5'
+  
   #POST /user/login
   def login
     respond_to do |format|
