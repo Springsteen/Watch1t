@@ -1,15 +1,17 @@
 <p id="notice"><%= notice %></p>
 <%= form_tag("/users/update", method: "post",id:"register") do %>
 	<%= label_tag(:user, "UserName:") %>
-	<%= text_field_tag(:user,"",:value => @logged_user.user) %><br>
+	<%= text_field_tag(:user,"",:value => @logged_user.user,:required => true) %><br>
 	<%= label_tag(:password, "Password:") %>
-	<%= password_field_tag(:password,"",:value => @logged_user.password) %><br>
+	<%= password_field_tag(:password,"",:value => @logged_user.password,:required => true) %><br>
+	<%= label_tag(:repeat_password, "Repeat Password:") %>
+	<%= password_field_tag(:repeat_password,"",:value => @logged_user.password,:required => true) %><br>
 	<%= label_tag(:email, "E-Mail:") %>
-	<%= email_field_tag(:email,"",:value => @logged_user.email) %><br>
+	<%= email_field_tag(:email,"",:value => @logged_user.email,:required => true) %><br>
 	<%= label_tag(:secret_question, "Secret Question:") %>
-	<%= text_field_tag(:secret_question,"",:value => @logged_user.secret_question) %><br>
+	<%= text_field_tag(:secret_question,"",:value => @logged_user.secret_question,:required => true) %><br>
 	<%= label_tag(:secret_answer, "Secret Answer:") %>
-	<%= text_field_tag(:secret_answer,"",:value => @logged_user.secret_answer) %><br>
+	<%= text_field_tag(:secret_answer,"",:value => @logged_user.secret_answer,:required => true) %><br>
 	<%= label_tag(:skype, "Skype:") %>
 	<%= text_field_tag(:skype,"",:value => @logged_user.skype) %><br>
 	<%= label_tag(:country, "Country:") %>

@@ -9,6 +9,8 @@
 	<%= text_field_tag(:user,"",:required => true) %><br>
 	<%= label_tag(:password, "Password:") %>
 	<%= password_field_tag(:password,"",:required => true) %><br>
+	<%= label_tag(:repeat_password, "Repeat Password:") %>
+	<%= password_field_tag(:repeat_password,"",:required => true) %><br>
 	<%= label_tag(:email, "E-Mail:") %>
 	<%= email_field_tag(:email,"",:required => true) %><br>
 	<%= label_tag(:secret_question, "Secret Question:") %>

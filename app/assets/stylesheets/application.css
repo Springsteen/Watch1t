@@ -37,6 +37,3 @@ input[type="submit"],button{
 input[type="submit"]:hover,button:hover{
 	border:3px solid LightGreen;
 }
-#register textarea{
-	resize:none;	
-}
