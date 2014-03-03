@@ -1,6 +1,6 @@
 
 <%content_for :user_panel do%> 
-	<%if session[:user_id].nil?%>
+  <%if session[:user_id].nil?%>
 		<p id="notice"><%= notice %></p>
 		<%= form_tag("/users/login", method: "post",id:"login") do %>
 			<%= label_tag(:user, "UserName:") %>
@@ -10,8 +10,9 @@
 			<%= submit_tag("Login") %>
 			<a href="/users/register"><button>Register</button></a>
 		<%end%>
-	<%else%>
+	<%elsif (!session[:user_id].nil? && @logged_user.email_check == (1).to_s) %>
 		<h1>Welcome <%=User.find(session[:user_id]).user%></h1>
+    <h2>IP <%=User.find(session[:user_id]).ip%></h2>
 		<ul class="menu">
 			<li><a href="">Link 1</a></li>
 			<li><a href="">Link 2</a></li>
@@ -19,5 +20,13 @@
 			<li><a href="/users/destroy">Delete Account</a></li>
 			<li><a href="/users/logout">LogOut</a></li>
 		</ul>
+   <%else%>
+		<p id="notice"><%= notice %></p>
+    <%= form_tag("validate_email", method: "post",id:"validate") do %>
+      <%= label_tag(:validate_mail_code, "Validate Code:") %>
+      <%= text_field_tag(:validate_mail_code,"",:required => true) %><br>
+      <%= submit_tag("Validate") %>
+			<button><a href="/users/logout">LogOut</a></button>
+    <% end %>
 	<%end%>
 <% end %>

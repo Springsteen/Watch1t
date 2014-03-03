@@ -9,12 +9,14 @@ Watch1t::Application.routes.draw do
   get 'users/index' => 'users#index' 
   get 'users/register' => 'users#register' 
   get 'users/edit' => 'users#edit' 
+  get 'users/validate' => 'users#validate' 
   match 'users/login', via: [:post]
   match 'users/logout', via: [:get]
   match 'users/edit', via: [:get]
   match 'users/create', via: [:post]
   match 'users/update', via: [:post]
   match 'users/destroy', via: [:get]
+  match 'users/validate_email', via: [:post]
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

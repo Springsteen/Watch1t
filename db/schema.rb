@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140225213630) do
+ActiveRecord::Schema.define(version: 20140303175122) do
 
   create_table "episodes", force: true do |t|
     t.string   "title"
@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(version: 20140225213630) do
     t.string   "user",            limit: 10, null: false
     t.binary   "password",                   null: false
     t.string   "email",                      null: false
-    t.boolean  "email_check",                null: false
+    t.binary   "email_check",                null: false
     t.string   "secret_question",            null: false
     t.string   "secret_answer",              null: false
     t.string   "skype"
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 20140225213630) do
     t.integer  "block_code",                 null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "ip"
   end
 
 end

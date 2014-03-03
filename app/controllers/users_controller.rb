@@ -2,7 +2,6 @@ class UsersController < ApplicationController
   before_action :set_user
   @logged_user
   require 'digest/md5'
-  
   #POST /user/login
   def login
     respond_to do |format|
@@ -12,7 +11,15 @@ class UsersController < ApplicationController
         format.html { redirect_to '/users/index', notice: "Wrong user or password." }
       else
         session[:user_id] = User.where(user: params[:user]).take.id
-        format.html { redirect_to '/users/index', notice: "OK" }
+        set_user()
+        if @logged_user.ip != request.remote_ip
+          UserMailer.email(@logged_user,"Watch1t Team","Computer with IP "+request.remote_ip+" logged in your account.").deliver
+          @logged_user.update(:ip => request.remote_ip)
+        end
+        if @logged_user.email_check != '1'
+          format.html { redirect_to '/users/index', notice: "Please validate your E-Mail." }
+        end
+        format.html { redirect_to '/users/index', notice: @logged_user.ip }
       end
     end
   end
@@ -25,6 +32,19 @@ class UsersController < ApplicationController
     end
   end
 
+  def validate_email
+    respond_to do |format|
+      if params[:validate_mail_code].blank?
+        format.html { redirect_to '/users/index', notice: "Please Validate your E-Mail." }
+      elsif @logged_user.email_check != params[:validate_mail_code]
+        format.html { redirect_to '/users/index', notice: "Wrong Validate code." }
+      else
+        @logged_user.update(:email_check => (1).to_s);
+        format.html { redirect_to '/users/index', notice: "OK"}
+      end
+    end
+  end
+  
   # POST /users/create
   def create
     respond_to do |format|
@@ -36,9 +56,13 @@ class UsersController < ApplicationController
         format.html { redirect_to '/users/register', notice: 'Wrong Code.'}
       elsif params[:repeat_password] != params[:password]
         format.html { redirect_to '/users/register', notice: 'Wrong Repeat Password.'}
+      elsif !User.where(email: params[:email]).take.nil?
+        format.html { redirect_to '/users/register', notice: 'This email already exist.'}
       else
-        @user = User.new(:country => params[:country],:skype => params[:skype],:user => params[:user],:password => Digest::MD5.hexdigest(params[:password]),:block_code => 1,:email => params[:email],:email_check => 1,:secret_question => params[:secret_question],:secret_answer => params[:secret_answer])
+        check_mail_code = Digest::MD5.hexdigest((Time.now.to_i + Random.rand(5000-10)).to_s)
+        @user = User.new(:country => params[:country],:skype => params[:skype],:user => params[:user],:password => Digest::MD5.hexdigest(params[:password]),:block_code => 1,:email => params[:email],:email_check => check_mail_code,:secret_question => params[:secret_question],:secret_answer => params[:secret_answer],:ip => request.remote_ip)
         if @user.save
+          UserMailer.email(User.where(user: params[:user]).take,"Watch1t Team","Validate Mail Code: "+check_mail_code).deliver
           format.html { redirect_to '/users/index', notice: 'Your account was successfully created.' }
           session.delete(:code)
         else
@@ -52,18 +76,20 @@ class UsersController < ApplicationController
   # POST users/update
   def update
     respond_to do |format|
-      if @logged_user.password == params[:password]
+      if @logged_user.password == params[:edit_password]
         password = @logged_user.password
       else
-        password = Digest::MD5.hexdigest(params[:password])
+        password = Digest::MD5.hexdigest(params[:edit_password])
       end
-      if params[:user].blank? || params[:password].blank? || params[:email].blank? || params[:secret_answer].blank? || params[:secret_question].blank?
+      if params[:user].blank? || params[:edit_password].blank? || params[:email].blank? || params[:secret_answer].blank? || params[:secret_question].blank?
          format.html { redirect_to '/users/edit', notice: 'Problem'}
-      elsif params[:repeat_password] != params[:password]
+      elsif params[:repeat_password] != params[:edit_password]
         format.html { redirect_to '/users/register', notice: 'Wrong Repeat Password.'}
       elsif User.where(user: params[:user]).count >= 1 && @logged_user.user != params[:user]
         format.html { redirect_to '/users/edit', notice: 'This user already exist.'}
-      elsif @logged_user.update(:user => params[:user],:password => password,:email => params[:email],:email_check => 1,:secret_question => params[:secret_question],:secret_answer => params[:secret_answer],:country => params[:country],:skype => params[:skype])
+        check_mail_code = Digest::MD5.hexdigest(Time.now.to_i + Random.rand(5000-10));
+        UserMailer.email(User.where(user: params[:user]).take,"Watch1t Team","Validate Mail Code: "+  check_mail_code).deliver
+      elsif @logged_user.update(:user => params[:user],:password => password,:email => params[:email],:email_check => check_mail_code,:secret_question => params[:secret_question],:secret_answer => params[:secret_answer],:country => params[:country],:skype => params[:skype])
         format.html { redirect_to '/users/index', notice: 'Your account was successfully updated.' }
       else
         format.html { redirect_to '/users/index', notice: 'System Problem.' }
