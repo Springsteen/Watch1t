@@ -1,3 +1,5 @@
+
+
 class SeriesController < ApplicationController
   before_action :set_series, only: [:show, :edit, :update, :destroy]
 
@@ -24,15 +26,14 @@ class SeriesController < ApplicationController
   # POST /series
   # POST /series.json
   def create
-    @series = Serie.new(series_params)
+    @series = SeriesSearch.new.find(series_params[:search].to_s)
+
 
     respond_to do |format|
       if @series.save
-        format.html { redirect_to @series, notice: 'Serie was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @series }
+        format.html { redirect_to '/series', notice: 'OK' }
       else
         format.html { render action: 'new' }
-        format.json { render json: @series.errors, status: :unprocessable_entity }
       end
     end
   end

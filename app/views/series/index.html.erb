@@ -10,6 +10,16 @@
   </thead>
 
   <tbody>
+
+
+    <%= form_tag("/series", method: "post",id:"search") do %>
+      <p>
+        <%= text_field_tag(:criteria,"",:required => true) %><br>
+        <%= submit_tag("Search") %>
+      </p>
+    <% end %>
+
+
     <% @series.each do |series| %>
       <tr>
         <td><%= link_to 'Show', series %></td>
