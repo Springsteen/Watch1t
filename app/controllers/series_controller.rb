@@ -1,5 +1,3 @@
-
-
 class SeriesController < ApplicationController
   before_action :set_series, only: [:show, :edit, :update, :destroy]
 
@@ -26,16 +24,18 @@ class SeriesController < ApplicationController
   # POST /series
   # POST /series.json
   def create
-    @series = SeriesSearch.new.find(series_params[:search].to_s)
-
-
     respond_to do |format|
-      if @series.save
-        format.html { redirect_to '/series', notice: 'OK' }
-      else
-        format.html { render action: 'new' }
-      end
+    	if Serie.find(params[:search]).take.nil?
+    		format.html {redirect_to '/series/index', notice: "There arent any matches in the database !" }
+    	end
     end
+	#respond_to do |format|
+     # if @series.save
+      #  format.html { redirect_to '/series', notice: 'OK' }
+     # else
+      #  format.html { render action: 'new' }
+      #end
+   # end
   end
 
   # PATCH/PUT /series/1
