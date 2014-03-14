@@ -25,17 +25,10 @@ class SeriesController < ApplicationController
   # POST /series.json
   def create
     respond_to do |format|
-    	if Serie.find(params[:search]).take.nil?
-    		format.html {redirect_to '/series/index', notice: "There arent any matches in the database !" }
+    	if Serie.where(title: params[:criteria]).take.nil?
+    		format.html {redirect_to :back, notice: "There arent any matches in the database !" }
     	end
     end
-	#respond_to do |format|
-     # if @series.save
-      #  format.html { redirect_to '/series', notice: 'OK' }
-     # else
-      #  format.html { render action: 'new' }
-      #end
-   # end
   end
 
   # PATCH/PUT /series/1
