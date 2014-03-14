@@ -1,4 +1,4 @@
-<h1>Listing series</h1>
+<h1>Search for serie</h1>
 
 <table>
   <thead>
@@ -19,17 +19,5 @@
       </p>
     <% end %>
 
-
-    <% @series.each do |series| %>
-      <tr>
-        <td><%= link_to 'Show', series %></td>
-        <td><%= link_to 'Edit', edit_series_path(series) %></td>
-        <td><%= link_to 'Destroy', series, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to 'New Serie', new_series_path %>
