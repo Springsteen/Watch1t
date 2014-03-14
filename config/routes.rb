@@ -9,7 +9,7 @@ Watch1t::Application.routes.draw do
   get 'users/index' => 'users#index' 
   get 'users/register' => 'users#register' 
   get 'users/edit' => 'users#edit' 
-  get 'users/validate' => 'users#validate' 
+  get 'users/user_panel' => 'users#user_panel' 
   match 'users/login', via: [:post]
   match 'users/logout', via: [:get]
   match 'users/edit', via: [:get]

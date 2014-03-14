@@ -27,6 +27,8 @@ class SeriesController < ApplicationController
     respond_to do |format|
     	if Serie.where(title: params[:criteria]).take.nil?
     		format.html {redirect_to :back, notice: "There arent any matches in the database !" }
+      else
+    		format.html {redirect_to :back, notice: "OK" }
     	end
     end
   end
