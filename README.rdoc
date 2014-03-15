@@ -1,28 +1,10 @@
-== README
-
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+Watch1t
+-------
+Watch1t is a web application made for people who want fast and reliable information about their favourite TV series. 
+-------
+The feautures we are planning to implement are:
+==> A vast database of series produced nowdays.
+==> Fast synchronization with IMDB.
+==> Simple and user friendly system for disscussion.
+-------
+The only thing you need to do is to register and confirm your email address.
