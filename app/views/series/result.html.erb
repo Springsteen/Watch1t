@@ -1,0 +1,7 @@
+<h1>Search results</h1>
+
+<ul>
+	<% @series.each do |s| %>
+		<li>Title: <%= s.title %> Year: <%= s.year %></li>
+	<% end %>
+</ul>

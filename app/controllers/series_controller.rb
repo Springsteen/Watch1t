@@ -28,7 +28,7 @@ class SeriesController < ApplicationController
     	if @series.empty?
     		format.html {redirect_to :back, notice: "There arent any matches in the database !" }
       else
-    		format.html {redirect_to :back, notice: "OK" } 
+    		format.html {render "result"} 
     	end
     end
   end
