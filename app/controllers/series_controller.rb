@@ -21,8 +21,7 @@ class SeriesController < ApplicationController
   def edit
   end
 
-  # POST /series
-  # POST /series.json
+  # POST /series/search
   def search
     @series = Serie.search params[:search]
     respond_to do |format|
