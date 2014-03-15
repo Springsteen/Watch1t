@@ -12,14 +12,34 @@
  *= require_tree .
  */
 *{
-	color:white;
+	color:black;
 	font-size:16px;
 	font-family: verdana, arial, helvetica, sans-serif;
 }
 body{
-	background-color:black;
+	background-color:silver;
 	text-align:center;
 }
+
+.content div {
+	float: left;
+	border: 1px solid black;
+	padding: 5px;
+	margin: 5px;
+}
+
+.main {
+	width: 60%;
+}
+
+.userpanel {
+	width: 20%
+}
+
+footer {
+	clear: both;
+}
+
 input,select,textarea,button{
 	color:LightCyan;
 	background-color:grey;

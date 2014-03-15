@@ -12,8 +12,14 @@
 		<h1>Welcome</h1>
 	</header>
 	<section>
-		<%= yield :user_panel %>
-		<%= yield %>
+		<div class="content">
+			<div class="userpanel">
+				<%= yield :user_panel %>
+			</div>
+			<div class="main">
+				<%= yield %>
+			</div>
+		</div>
 	</section>
 	<footer>
 		<p>&#64; All Rights Reserved</p>
