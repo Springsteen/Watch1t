@@ -23,12 +23,13 @@ class SeriesController < ApplicationController
 
   # POST /series
   # POST /series.json
-  def create
+  def search
+    @series = Serie.search params[:search]
     respond_to do |format|
-    	if Serie.where(title: params[:criteria]).take.nil?
+    	if @series.empty?
     		format.html {redirect_to :back, notice: "There arent any matches in the database !" }
       else
-    		format.html {redirect_to :back, notice: "OK" }
+    		format.html {redirect_to :back, notice: "OK" } 
     	end
     end
   end
@@ -57,7 +58,7 @@ class SeriesController < ApplicationController
     end
   end
 
-  private
+private
     # Use callbacks to share common setup or constraints between actions.
     def set_series
       @series = Serie.find(params[:id])

@@ -12,12 +12,11 @@
   <tbody>
 
 
-    <%= form_tag("/series", method: "post",id:"search") do %>
-      <p>
-        <%= text_field_tag(:criteria,"",:required => true) %><br>
-        <%= submit_tag("Search") %>
-      </p>
-    <% end %>
+    <%= form_tag :controller => 'series', :action => 'search', :method => 'get' do %>
+      <%= text_field_tag :search, params[:search], :id => 'search_field' %>
+      <%= submit_tag "Search", :name => nil %> 
+      <%= link_to_function "Clear", "$('search_field').clear()" %>
+    <% end %> 
 
   </tbody>
 </table>
