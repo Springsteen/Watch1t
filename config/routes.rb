@@ -3,6 +3,8 @@ Watch1t::Application.routes.draw do
 
   resources :seasons
   
+  root :to => 'series#index'
+
   get 'users' => 'users#index' 
   get 'users/index' => 'users#index' 
   get 'users/register' => 'users#register' 
