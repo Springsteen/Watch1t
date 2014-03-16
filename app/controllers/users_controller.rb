@@ -29,7 +29,7 @@ class UsersController < ApplicationController
   #GET /user/logout
   def logout
     session[:user_id] = nil;
-      redirect_to :back
+      redirect_to "/users"
   end
 
   def validate_email
