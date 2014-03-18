@@ -6,5 +6,4 @@ class Serie < ActiveRecord::Base
 		search_condition = "%" + search + "%"
 		find(:all, :conditions => ['title LIKE ?', search_condition])
 	end
-
 end

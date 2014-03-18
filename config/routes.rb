@@ -17,6 +17,7 @@ Watch1t::Application.routes.draw do
   match 'users/update', via: [:post]
   match 'users/destroy', via: [:get]
   match 'users/validate_email', via: [:post]
+  match 'users/search_torents', via: [:get]
 
   get 'series' => 'series#index'
   match 'series/search',  via: [:post]

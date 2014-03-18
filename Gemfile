@@ -5,6 +5,8 @@ gem 'rails', '4.0.2'
 
 gem 'imdb', '0.8.1'
 
+gem 'delayed_job'
+
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 
@@ -45,3 +47,7 @@ end
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
+
+gem 'delayed_job_active_record'
+
+gem 'daemons'
