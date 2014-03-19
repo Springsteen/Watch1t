@@ -26,6 +26,10 @@ class UsersController < ApplicationController
       end
   end
   
+  def search_torents()
+      @doc = Nokogiri::HTML(open("http://www.zamunda.net"))
+      flash[:link] = @doc.css('title').text
+  end
   #GET /user/logout
   def logout
     session[:user_id] = nil;

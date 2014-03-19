@@ -1,4 +1,5 @@
 Watch1t::Application.routes.draw do
+
   resources :episodes
 
   resources :seasons
@@ -17,9 +18,16 @@ Watch1t::Application.routes.draw do
   match 'users/update', via: [:post]
   match 'users/destroy', via: [:get]
   match 'users/validate_email', via: [:post]
+  match 'users/search_torents', via: [:get]
 
   get 'series' => 'series#index'
   match 'series/search',  via: [:post]
+  
+  
+  match 'comments/show',  via: [:get] 
+  match 'comments/post',  via: [:post]
+  match 'comments/edit',  via: [:post]
+  match 'comments/delete',  via: [:post]
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

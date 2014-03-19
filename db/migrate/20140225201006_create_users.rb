@@ -11,7 +11,7 @@ class CreateUsers < ActiveRecord::Migration
 	  t.string :country
 	  t.datetime :created_date, :null =>false
 	  t.integer :block_code, :null =>false
-      t.timestamps
+    t.timestamps
     end
   end
 end

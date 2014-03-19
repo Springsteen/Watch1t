@@ -21,7 +21,7 @@
 			<li><a href="/users/logout">LogOut</a></li>
 		</ul>
    <%else%>
-    <%= form_tag("users/validate_email", method: "post",id:"validate") do %>
+    <%= form_tag("/users/validate_email", method: "post",id:"validate") do %>
       <%= label_tag(:validate_mail_code, "Validate Code:") %>
       <%= text_field_tag(:validate_mail_code,"",:required => true) %><br>
       <%= submit_tag("Validate") %>
