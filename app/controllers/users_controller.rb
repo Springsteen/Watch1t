@@ -112,7 +112,7 @@ class UsersController < ApplicationController
   private
     def set_user
       if !session[:user_id].nil?
-       session[:user_id] = session[:user_id];
+       session[:user_id] = session[:user_id]
        @logged_user=User.find(session[:user_id])
       else
         @logged_user = nil;

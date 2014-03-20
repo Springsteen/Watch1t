@@ -11,18 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20140319105005) do
 
   create_table "comments", force: true do |t|
     t.string   "user",       limit: 10, null: false
+    t.string   "title",                 null: false
     t.string   "content",               null: false
+    t.string   "serie",                 null: false
+    t.string   "season",                null: false
+    t.string   "epizode",               null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-=======
-ActiveRecord::Schema.define(version: 20140318210819) do
->>>>>>> 78543759cf6376b388c2a1f9c4339161984a450a
 
   create_table "delayed_jobs", force: true do |t|
     t.integer  "priority",   default: 0, null: false
