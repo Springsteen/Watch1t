@@ -18,8 +18,8 @@ ActiveRecord::Schema.define(version: 20140319105005) do
     t.string   "title",                 null: false
     t.string   "content",               null: false
     t.string   "serie",                 null: false
-    t.string   "season",                null: false
-    t.string   "epizode",               null: false
+    t.integer  "season",                null: false
+    t.integer  "epizode",               null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
