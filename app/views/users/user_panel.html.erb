@@ -14,7 +14,7 @@
 	<%elsif (!session[:user_id].nil? && User.find(session[:user_id]).email_check == (1).to_s) %>
 		<h2>Welcome <%=User.find(session[:user_id]).user%></h2>
 		<ul class="menu">
-			<li><a href="">Link 1</a></li>
+			<li><a href="/users/send_contact_mail">Contacts</a></li>
 			<li><a href="/comments/show">Comment</a></li>
 			<li><a href="/users/edit">Edit Account</a></li>
 			<li><a href="/users/destroy">Delete Account</a></li>

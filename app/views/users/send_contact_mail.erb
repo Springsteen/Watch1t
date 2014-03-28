@@ -1,0 +1,14 @@
+<h1>Constacts</h1>
+<p id="notice"><%=flash[:contacts] %></p>
+<%= form_tag("/users/contacts", method: "post",id:"login") do %>
+  <%= label_tag(:user_mail, "Your E-Mail:") %>
+  <%= text_field_tag(:user_mail,User.find(session[:user_id]).email,:required => true) %><br>
+  <%= label_tag(:admin_email, "Admin:") %>
+  <%= select_tag :admin_email, options_for_select(User.where(:block_code => 8).pluck(:email),:required => true) %><br>
+  <%= label_tag(:email_subject, "Subject:") %>
+  <%= text_field_tag(:email_subject,"",:required => true) %><br>
+  <%= text_area_tag(:email_content, nil, size: "70x10",:required => true) %><br>
+  <%= submit_tag("Send") %>
+  <a href="/users/register"><button>Register</button></a>
+<%end%>
+	
