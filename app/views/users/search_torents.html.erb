@@ -1,1 +1,6 @@
-<p><%=flash[:link]%></p>
+<p><%=flash[:next_page]%></p>
+<p><% @xaxa.each_with_index do |row,big_index|%>
+  <% row.each_with_index do |name,index|%>
+    <%=big_index*20+index%>  <%=name.text.split("/")[0]%><br>
+  <%end%>
+<%end%></p>

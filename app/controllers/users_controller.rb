@@ -27,8 +27,23 @@ class UsersController < ApplicationController
   end
   
   def search_torents()
-      @doc = Nokogiri::HTML(open("http://www.zamunda.net"))
-      flash[:link] = @doc.css('title').text
+    @xaxa = Array.new
+    page_counter = 0;
+    array_counter = 0;
+    begin
+      next_page = "http://zamunda.net/browse.php?c7=1&c33=1&search="+params[:id]+"&incldead=1&field=name&page="+page_counter.to_s
+      agent = Mechanize.new
+      zamunda = agent.get(next_page)
+      login = zamunda.form_with(:action => "takelogin.php")
+      login.field_with(:name => "username").value = "hrisizzz"
+      login.field_with(:name => "password").value = "hrisiz"
+      result = login.submit
+      zamunda_body = result.body
+      nokogiri_doc = Nokogiri::HTML(zamunda_body)
+      @xaxa[array_counter] = nokogiri_doc.css("table.test td[align=\"left\"]>a>b")
+      page_counter +=1
+      array_counter += 1
+    end while(@xaxa[array_counter-1].count >= 20)  
   end
   #GET /user/logout
   def logout
