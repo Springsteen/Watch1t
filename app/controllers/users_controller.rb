@@ -35,8 +35,8 @@ class UsersController < ApplicationController
       agent = Mechanize.new
       zamunda = agent.get(next_page)
       login = zamunda.form_with(:action => "takelogin.php")
-      login.field_with(:name => "username").value = "hrisizzz"
-      login.field_with(:name => "password").value = "hrisiz"
+      login.field_with(:name => "username").value = "watch1tteam"
+      login.field_with(:name => "password").value = "PowerPassword1"
       result = login.submit
       zamunda_body = result.body
       nokogiri_doc = Nokogiri::HTML(zamunda_body)
