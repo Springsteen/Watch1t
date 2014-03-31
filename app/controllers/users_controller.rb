@@ -30,6 +30,11 @@ class UsersController < ApplicationController
     @xaxa = Array.new
     page_counter = 0;
     array_counter = 0;
+    # Series.where('torrent' => 'NULL').each do |serie|
+      # @xaxa[array_counter] = "xa"
+      # array_counter += 1
+    # end
+    
     begin
       next_page = "http://zamunda.net/browse.php?c7=1&c33=1&search="+params[:id]+"&incldead=1&field=name&page="+page_counter.to_s
       agent = Mechanize.new
