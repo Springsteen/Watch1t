@@ -23,8 +23,13 @@ Watch1t::Application.routes.draw do
   get 'users/search_torents/:id' => 'users#search_torents'
 
   get 'series' => 'series#index'
+  get 'series/index' => 'series#index'
   match 'series/search',  via: [:post]
   
+  get 'series/:id' => 'series#show'
+  match 'series/show',  via: [:get]
+  
+  get 'series/:id/update' => 'series#synch'
   
   match 'comments/show',  via: [:get] 
   match 'comments/post',  via: [:post]

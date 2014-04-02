@@ -10,6 +10,13 @@ class SeriesController < ApplicationController
   # GET /series/1
   # GET /series/1.json
   def show
+    respond_to do |format|
+      if @series.nil?
+        format.html {redirect_to :back, notice: "There isnt any serie with that id !" }
+      else
+        format.html {render "show"} 
+      end
+    end
   end
 
   # GET /series/new
@@ -34,10 +41,15 @@ class SeriesController < ApplicationController
   end
 
   # PATCH/PUT /series/1
-  # PATCH/PUT /series/1.json
-  def update
+  def synch
     s = @series.first
-    s = Serie.update (params[:imdb_id])
+    new_serie = Imdb::Serie.new(s.imdb_id)
+
+    s[:title] = new_serie.title.to_s
+    s[:year] = new_serie.year.to_i
+    s[:updated_at] = Time.now
+    s.save
+
     respond_to do |format|
       if !@series.empty?
         format.html { redirect_to @series, notice: 'Serie was successfully updated.' }

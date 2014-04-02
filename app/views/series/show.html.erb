@@ -1,4 +1,9 @@
 <p id="notice"><%= notice %></p>
 
-<%= link_to 'Edit', edit_series_path(@series) %> |
+<ul>
+		<li> Title: <%= @series.title %> </li> 
+		<li> Year: <%= @series.year %> </li>
+</ul>
+
+<%= link_to 'Search', 'index'%> |
 <%= link_to 'Back', series_path %>
