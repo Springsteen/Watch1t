@@ -13,7 +13,7 @@ class EpisodesController < ApplicationController
   end
 
   def list_all_episodes
-    @episodes = Episode.all
+    @episodes = Episode.where(season_id: params[:id])
     respond_to do |format|
       if @episodes.nil?
         format.html { redirect_to :back, notice: 'There arent any episodes in the database.' }

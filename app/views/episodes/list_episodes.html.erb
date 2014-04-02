@@ -4,6 +4,7 @@
 	<% @episodes.each do |e| %>
 		<li> Title:<%= e.title %> </li>
 		<li> Air Date:<%= e.air_date %> </li>
+		<li> <%= link_to "More Information", controller: "episodes", action: "show", id: e.id %> </li>
 		<br>
 	<% end %>
 

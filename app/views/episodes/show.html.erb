@@ -1,4 +1,9 @@
 <p id="notice"><%= notice %></p>
 
+<ul>
+		<li> Title: <%= @episode.title %> </li> 
+		<li> Air Date:<%= @episode.air_date %> </li>
+</ul>
+
 <%= link_to 'Edit', edit_episode_path(@episode) %> |
 <%= link_to 'Back', episodes_path %>

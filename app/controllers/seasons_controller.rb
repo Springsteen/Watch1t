@@ -16,7 +16,7 @@ class SeasonsController < ApplicationController
 
   # POST /seasons/list_seasons
   def list_all_seasons
-    @seasons = Season.all
+    @seasons = Season.where(serie_id: params[:id])
 
     respond_to do |format|
       if @seasons.nil?

@@ -1,8 +1,13 @@
 <p id="notice"><%= notice %></p>
 
+<ul>
+		<li> Title: <%= @season.title %> </li> 
+		<li> Year: <%= @season.created_at %> </li>
+</ul>
+
 <%= link_to 'Edit', edit_season_path(@season) %> |
 <%= link_to 'Back', seasons_path %> |
 <%= link_to "List of all episodes", 
 	controller: "episodes", 
 	action: "list_all_episodes", 
-	id: nil %> |
+	id: @season.id %> |
