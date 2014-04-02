@@ -1,0 +1,10 @@
+<ul>
+
+	<% @seasons.each do |s| %>
+		<li>Season Id: <%= s.id%></li>
+		<li>Season Title: <%= s.title%></li>
+		<li>Created At: <%= s.created_at%></li>
+		<br>
+	<% end %>
+
+</ul>

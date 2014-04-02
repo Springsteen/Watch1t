@@ -12,6 +12,18 @@ class SeasonsController < ApplicationController
   def show
   end
 
+  def list_all_seasons
+    @seasons = Season.all
+
+    respond_to do |format|
+      if @seasons.nil?
+        format.html { rendirect_to :back, notice: 'There arent any seasons in the database.'}
+      else
+        format.html { render action: 'list_seasons'}
+      end
+    end
+  end
+
   # GET /seasons/new
   def new
     @season = Season.new

@@ -25,12 +25,13 @@ Watch1t::Application.routes.draw do
   get 'series' => 'series#index'
   get 'series/index' => 'series#index'
   match 'series/search',  via: [:post]
-  
   get 'series/:id' => 'series#show'
   match 'series/show',  via: [:get]
-  
   get 'series/:id/update' => 'series#synch'
-  
+
+  get 'list_seasons' => 'seasons#list_all_seasons'
+  match 'seasons/list_seasons', via: [:post]
+
   match 'comments/show',  via: [:get] 
   match 'comments/post',  via: [:post]
   match 'comments/edit',  via: [:post]
