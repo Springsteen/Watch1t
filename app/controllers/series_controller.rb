@@ -8,7 +8,6 @@ class SeriesController < ApplicationController
   end
 
   # GET /series/1
-  # GET /series/1.json
   def show
     respond_to do |format|
       if @series.nil?

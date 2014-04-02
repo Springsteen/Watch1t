@@ -2,6 +2,8 @@
 
 <ul>
 	<% @series.each do |s| %>
-		<li>Title: <%= s.title %> Year: <%= s.year %></li>
+		<li> Title: <%= s.title %> </li> 
+		<li> Year: <%= s.year %> </li>
+		<li> <%= link_to "More Information", controller: "series", action: "show", id: s %> </li>
 	<% end %>
 </ul>
