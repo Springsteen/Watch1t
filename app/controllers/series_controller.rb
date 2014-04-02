@@ -36,13 +36,13 @@ class SeriesController < ApplicationController
   # PATCH/PUT /series/1
   # PATCH/PUT /series/1.json
   def update
+    s = @series.first
+    s = Serie.update (params[:imdb_id])
     respond_to do |format|
-      if @series.update(series_params)
+      if !@series.empty?
         format.html { redirect_to @series, notice: 'Serie was successfully updated.' }
-        format.json { head :no_content }
       else
-        format.html { render action: 'edit' }
-        format.json { render json: @series.errors, status: :unprocessable_entity }
+        format.html { redirect_to series_url }
       end
     end
   end
