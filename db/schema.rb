@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140402063336) do
+ActiveRecord::Schema.define(version: 20140402111311) do
 
   create_table "comments", force: true do |t|
     t.string   "user",       limit: 10, null: false
@@ -45,7 +45,9 @@ ActiveRecord::Schema.define(version: 20140402063336) do
     t.date     "air_date"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "torrent",    limit: 200
+    t.string   "torrent",      limit: 200
+    t.string   "torrent_link"
+    t.string   "subs_link"
   end
 
   create_table "seasons", force: true do |t|
