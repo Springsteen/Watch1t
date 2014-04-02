@@ -8,16 +8,19 @@ class SeasonsController < ApplicationController
   end
 
   # GET /seasons/1
-  # GET /seasons/1.json
   def show
+    respond_to do |format|  
+        format.html { render action: 'show' }
+    end
   end
 
+  # POST /seasons/list_seasons
   def list_all_seasons
     @seasons = Season.all
 
     respond_to do |format|
       if @seasons.nil?
-        format.html { rendirect_to :back, notice: 'There arent any seasons in the database.'}
+        format.html { redirect_to :back, notice: 'There arent any seasons in the database.'}
       else
         format.html { render action: 'list_seasons'}
       end

@@ -32,6 +32,9 @@ Watch1t::Application.routes.draw do
   get 'list_seasons' => 'seasons#list_all_seasons'
   match 'seasons/list_seasons', via: [:post]
 
+  get 'list_episodes' => 'episodes#list_all_episodes'
+  match 'episodes/list_episodes', via: [:post]
+
   match 'comments/show',  via: [:get] 
   match 'comments/post',  via: [:post]
   match 'comments/edit',  via: [:post]

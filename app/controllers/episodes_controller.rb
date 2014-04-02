@@ -12,6 +12,17 @@ class EpisodesController < ApplicationController
   def show
   end
 
+  def list_all_episodes
+    @episodes = Episode.all
+    respond_to do |format|
+      if @episodes.nil?
+        format.html { redirect_to :back, notice: 'There arent any episodes in the database.' }
+      else
+        format.html { render action: 'list_episodes' }
+      end
+    end
+  end
+
   # GET /episodes/new
   def new
     @episode = Episode.new
