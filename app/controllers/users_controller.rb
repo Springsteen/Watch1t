@@ -124,23 +124,23 @@ class UsersController < ApplicationController
     end
   end
   def search_torents
-    episodes = Episode.where(torrent_link:nil)
-    @result = Array.new
-    episodes.each do |e|
-      serie_air_date = e.air_date.to_s.gsub('-', '').to_i
-      time_now = Time.now.to_s.split(' ')[0].gsub('-', '').to_i
-      if(time_now > serie_air_date)
-        serial_name = Serie.find(Season.find(e.season_id).serie_id).title
-        season = Season.find(e.season_id).season
-        episode = e.episode
-        @result << [search_torent(serial_name,season,episode)]
-      end
-    end
+    
     #find_torents.delay(run_at: 5.minutes.from_now)
   end
   private
-    def find_torents
-      
+    def find_links
+      episodes = Episode.where(torrent_link:nil)
+      episodes.each do |e|
+        serie_air_date = e.air_date.to_s.gsub('-', '').to_i
+        time_now = Time.now.to_s.split(' ')[0].gsub('-', '').to_i
+        if(time_now > serie_air_date)
+          serial_name = Serie.find(Season.find(e.season_id).serie_id).title
+          season = Season.find(e.season_id).season
+          episode = e.episode
+          @result = search_torent(serial_name,season,episode)
+          Episode.update(:torrent_link => @result[0],:subs_link => @result[1])
+        end
+      end
     end 
     def search_torent(serie,season,episode=nil)
       subs = nil
