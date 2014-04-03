@@ -5,5 +5,4 @@
 		<li> Air Date:<%= @episode.air_date %> </li>
 </ul>
 
-<%= link_to 'Edit', edit_episode_path(@episode) %> |
-<%= link_to 'Back', episodes_path %>
+<%= link_to 'Back', controller: 'series', action: 'index', id: nil%>

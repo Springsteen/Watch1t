@@ -1,9 +1,5 @@
 Watch1t::Application.routes.draw do
 
-  resources :episodes
-
-  resources :seasons
-  
   root :to => 'series#index'
 
   get 'users' => 'users#index' 
@@ -31,9 +27,17 @@ Watch1t::Application.routes.draw do
 
   get 'list_seasons' => 'seasons#list_all_seasons'
   match 'seasons/list_seasons', via: [:post]
+  get 'seasons/:id' => 'seasons#show'
+  match 'seasons/show',  via: [:get]
+  # ADD EDIT PATH ONLY FOR ADMIN
+  # ADD NEW SEASON PATH ONLY FOR ADMIN
 
   get 'list_episodes' => 'episodes#list_all_episodes'
   match 'episodes/list_episodes', via: [:post]
+  get 'episodes/:id' => 'episodes#show'
+  match 'episodes/show',  via: [:get]
+  # ADD EDIT PATH ONLY FOR ADMIN
+  # ADD NEW EPISODE PATH ONLY FOR ADMIN
 
   match 'comments/show',  via: [:get] 
   match 'comments/post',  via: [:post]

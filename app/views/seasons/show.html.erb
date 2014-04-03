@@ -5,8 +5,7 @@
 		<li> Year: <%= @season.created_at %> </li>
 </ul>
 
-<%= link_to 'Edit', edit_season_path(@season) %> |
-<%= link_to 'Back', seasons_path %> |
+<%= link_to 'Back', controller: 'series', action: 'index', id: nil %> |
 <%= link_to "List of all episodes", 
 	controller: "episodes", 
 	action: "list_all_episodes", 
