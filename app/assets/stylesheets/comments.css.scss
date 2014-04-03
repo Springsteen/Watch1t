@@ -1,6 +1,28 @@
 // Place all the styles related to the Comments controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
 table th{
   text-align:left;
+}
+
+div textarea{
+	width: 80%;
+	margin: 2px;
+}
+
+div button {
+	width: 20%;
+}
+
+div input {
+	width: 80%;
+}
+
+div select {
+	width: 80%;
+}
+
+form#comment>input[type="submit"] {
+	width: 20%;
 }

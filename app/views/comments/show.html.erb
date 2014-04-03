@@ -1,14 +1,20 @@
 <p id="notice"><%= flash[:xaxa] %></p>
-<table border="1px">
-  <% @comments.each do |comment|%>
-    <tr><th><h1><%=comment.title%></h1></th></tr>
-    <tr><td><p><%=comment.content%></p></td></tr>
-  <%end   %>
-</table>
-<%= form_tag("/comments/post", method: "post",id:"login") do %>
-  <%= label_tag(:title, "Title:") %>
-  <%= text_field_tag(:title,"",:required => true) %><br>
-  <%= label_tag(:comment, "Content:") %>
-  <%= text_area_tag(:comment,"",:required => true) %><br>
-  <%= submit_tag("Comment") %>
-<%end%>
+<div>	
+	<table border="1px">
+	  <% @comments.each do |comment|%>
+	    <tr><th><h1><%=comment.title%></h1></th></tr>
+	    <tr><td><p><%=comment.content%></p></td></tr>
+	  <%end   %>
+	</table>
+	<%= form_tag("/comments/post", method: "post",id:"login") do %>
+	  Title:
+	  <br>
+	  <%= label_tag(:title, "") %>
+	  <%= text_field_tag(:title,"",:required => true) %><br>
+	  Content:
+	  <br>
+	  <%= label_tag(:comment, "") %>
+	  <%= text_area_tag(:comment,"",:required => true) %><br>
+	  <%= submit_tag("Comment") %>
+	<%end%>
+</div>
