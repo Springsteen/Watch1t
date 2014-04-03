@@ -195,7 +195,6 @@ class UsersController < ApplicationController
     if(@found_torrent.nil?)
       @found_torrent = first_found_torrent
     end
-    
   end
   private
     
