@@ -124,7 +124,20 @@ class UsersController < ApplicationController
     end
   end
   def search_torents
-    @subs = Season.where(torrent_link:nil,subs_link:nil)
+    xax = Time.new(2002)
+    @series = Episode.where(torrent_link:nil)
+    @serie_air_date = Array.new
+    @time_now = Array.new
+    @found = Array.new
+    @series.each do |e|
+      @serie_air_date << [e.air_date.to_s.gsub('-', '').to_i]
+      serie_air_date = e.air_date.to_s.gsub('-', '').to_i
+      @time_now << [Time.now.to_s.split(' ')[0].gsub('-', '').to_i]
+      time_now = Time.now.to_s.split(' ')[0].gsub('-', '').to_i
+      if(time_now > serie_air_date)
+        @found << [Serie.find(Season.find(e.season_id).serie_id).title+" Season "+Season.find(e.season_id).season.to_s+" Episode "+e.episode.to_s]
+      end
+    end
     #find_torents.delay(run_at: 5.minutes.from_now)
   end
   private
@@ -133,6 +146,7 @@ class UsersController < ApplicationController
     end 
    
     def set_user
+      #session[:user_id] = nil
       if !session[:user_id].nil?
        session[:user_id] = session[:user_id]
        @logged_user=User.find(session[:user_id])

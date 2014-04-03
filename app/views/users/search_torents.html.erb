@@ -1,7 +1,15 @@
 <p><%=flash[:next_page]%></p>
 <p>
-<a href="http://zamunda.net/<%=@found_torrent%>"><%=@found_torrent%></a> 
-<p>
-Subs:<%=@subs%><br>
+<%@time_now.each_with_index do |time,index|%>
+<%=time%>
+<%=@serie_air_date[index]%><br>
+<%end%>
 </p>
-</p>
+
+<br>
+<br>
+<br>
+<br>
+<%@found.each do |serie|%>
+ <p><%=serie%></p>
+<%end%>
