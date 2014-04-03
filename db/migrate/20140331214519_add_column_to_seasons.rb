@@ -1,5 +1,6 @@
 class AddColumnToSeasons < ActiveRecord::Migration
   def change
-    add_column :seasons, :torrent, :string, :limit => 200
+    add_column :episodes, :torrent_link, :string
+  	add_column :episodes, :subs_link, :string
   end
 end

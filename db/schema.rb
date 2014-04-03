@@ -45,7 +45,6 @@ ActiveRecord::Schema.define(version: 20140402141632) do
     t.date     "air_date"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "torrent",      limit: 200
     t.string   "torrent_link"
     t.string   "subs_link"
     t.integer  "season_id"
@@ -56,7 +55,6 @@ ActiveRecord::Schema.define(version: 20140402141632) do
     t.string   "episodes"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "torrent",    limit: 200
     t.integer  "serie_id"
   end
 
@@ -65,7 +63,6 @@ ActiveRecord::Schema.define(version: 20140402141632) do
     t.string   "year"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "torrent",     limit: 200
     t.text     "description"
     t.integer  "imdb_id"
   end
