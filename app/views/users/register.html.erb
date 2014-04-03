@@ -5,21 +5,21 @@
   check_code = session[:code] = check_code[-4..-1] 
 %>
 <%= form_tag("create", method: "post",id:"register") do %>
-	<%= label_tag(:user, "UserName:") %>
+	<%= label_tag(:user, "UserName:") %><br>
 	<%= text_field_tag(:user,"",:required => true) %><br>
-	<%= label_tag(:password, "Password:") %>
+	<%= label_tag(:password, "Password:") %><br>
 	<%= password_field_tag(:password,"",:required => true) %><br>
-	<%= label_tag(:repeat_password, "Repeat Password:") %>
+	<%= label_tag(:repeat_password, "Repeat Password:") %><br>
 	<%= password_field_tag(:repeat_password,"",:required => true) %><br>
-	<%= label_tag(:email, "E-Mail:") %>
+	<%= label_tag(:email, "E-Mail:") %><br>
 	<%= email_field_tag(:email,"",:required => true) %><br>
-	<%= label_tag(:secret_question, "Secret Question:") %>
+	<%= label_tag(:secret_question, "Secret Question:") %><br>
 	<%= text_field_tag(:secret_question,"",:required => true) %><br>
-	<%= label_tag(:secret_answer, "Secret Answer:") %>
+	<%= label_tag(:secret_answer, "Secret Answer:") %><br>
 	<%= text_field_tag(:secret_answer,"",:required => true) %><br>
-	<%= label_tag(:skype, "Skype:") %>
+	<%= label_tag(:skype, "Skype:") %><br>
 	<%= text_field_tag(:skype) %><br>
-	<%= label_tag(:country, "Country:") %>
+	<%= label_tag(:country, "Country:") %><br>
 	<select name="country" id="country">
 		<option value="">-- Select --</option>
 		<option value="Afghanistan">Afghanistan</option>
@@ -262,7 +262,7 @@
 		<option value="British Virgin Islands">British Virgin Islands</option>
 	</select><br>
   <p>Code: <%=check_code%></p>
-  <%= label_tag(:check_code, "Code:") %>
+  <%= label_tag(:check_code, "Code:") %><br>
 	<%= text_field_tag(:check_code) %><br>
 	<p>By registration you agree with <a href="">Terms of Agreement</a>! </p><br>
 	<%= submit_tag("Register") %>

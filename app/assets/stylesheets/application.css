@@ -31,7 +31,7 @@ body{
 
 .main {
 	width: 50%;
-	height: 500px;
+	min-height: 500px;
 	float: left;
 }
 

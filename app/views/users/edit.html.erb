@@ -1,31 +1,21 @@
 <p id="notice"><%= notice %></p>
 <div>	
 	<%= form_tag("/users/update", method: "post",id:"register") do %>
-		UserName:
-		<br>
-		<%= label_tag(:user, "") %>
+		<%= label_tag(:user, "UserName:") %><br>
 		<%= text_field_tag(:user,"",:value => @logged_user.user,:required => true) %><br>
-		Password:
-		<br>
-		<%= label_tag(:edit_password, "") %>
+		<%= label_tag(:edit_password, "Password:") %><br>
 		<%= password_field_tag(:edit_password,"",:value => @logged_user.password ,:required => true) %><br>
-		<%= label_tag(:repeat_password, "Repeat Password:") %>
+		<%= label_tag(:repeat_password, "Repeat Password:") %><br>
 		<%= password_field_tag(:repeat_password,"",:value => @logged_user.password ,:required => true) %><br>
-		E-Mail:
-		<br>
-		<%= label_tag(:email, "") %>
+		<%= label_tag(:email, "E-Mail:") %><br>
 		<%= email_field_tag(:email,"",:value => @logged_user.email,:required => true) %><br>
-		<%= label_tag(:secret_question, "Secret Question:") %>
+		<%= label_tag(:secret_question, "Secret Question:") %><br>
 		<%= text_field_tag(:secret_question,"",:value => @logged_user.secret_question,:required => true) %><br>
-		<%= label_tag(:secret_answer, "Secret Answer:") %>
+		<%= label_tag(:secret_answer, "Secret Answer:") %><br>
 		<%= text_field_tag(:secret_answer,"",:value => @logged_user.secret_answer,:required => true) %><br>
-		Skype:
-		<br>
-		<%= label_tag(:skype, "") %>
+		<%= label_tag(:skype, "Skype:") %><br>
 		<%= text_field_tag(:skype,"",:value => @logged_user.skype) %><br>
-		Country:
-		<br>
-		<%= label_tag(:country, "") %>
+		<%= label_tag(:country, "Country:") %><br>
 		<select name="country" id="country">
 			<option value="<%=@logged_user.country%>"><%=@logged_user.country%></option>
 			<option value="Afghanistan">Afghanistan</option>
