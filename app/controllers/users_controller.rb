@@ -133,7 +133,7 @@ class UsersController < ApplicationController
     end
     @subs = nil
     @found_torrent = nil
-    @found = {'name'=>Array.new,'torrent_link'=>Array.new,'subs' => Array.new}
+    @found = {'film_link'=>Array.new,'torrent_link'=>Array.new,'subs' => Array.new}
     page_counter = 0;
     array_counter = 0;
     begin
@@ -146,42 +146,46 @@ class UsersController < ApplicationController
       result = login.submit
       zamunda_body = result.body
       nokogiri_doc = Nokogiri::HTML(zamunda_body)
-      @found['subs'][array_counter] = nokogiri_doc.css("table.test td[align=\"left\"]>a+img")
-      @found['torrent_link'][array_counter] = nokogiri_doc.css("table.test td[align=\"left\"]>a:nth-child(2n)")
+      @found['subs'][array_counter] = nokogiri_doc.css("table.test>tr:not(:first-child)>td[align=\"left\"]>a+img")
+      @found['film_link'][array_counter] = nokogiri_doc.css("table.test>tr:not(:first-child)>td[align=\"left\"]>a:first-child")
+      @found['torrent_link'][array_counter] = nokogiri_doc.css("table.test>tr:not(:first-child)>td[align=\"left\"]>a:nth-child(2n)")
       page_counter +=1
       array_counter += 1
     end while(@found['torrent_link'][array_counter-1].count >= 20)
     first_found_torrent = "";
-    check_subs = ""
     @found['torrent_link'].each_with_index do |page_series,page_counter|
       page_series.each_with_index do |serie_torrent,link_counter|
+        check_subs = 0
         serie_torrent_with_downcase = serie_torrent.attr('href').downcase
         if(serie_torrent_with_downcase =~ /.(season|s)(\d|\s)#{season}/)
           if((!@found['subs'][page_counter][link_counter].nil?))
             if(@found['subs'][page_counter][link_counter].attr('title') =~ /.(subtitles|субтитри)/)
-              check_subs = 1 #with bg subtitles
+              check_subs = @found['film_link'][page_counter][link_counter].attr('href') #with bg subtitles
+              agent = Mechanize.new
+              zamunda = agent.get("http://zamunda.net/"+check_subs)
+              login = zamunda.form_with(:action => "takelogin.php")
+              login.field_with(:name => "username").value = "watch1tteam"
+              login.field_with(:name => "password").value = "PowerPassword1"
+              result = login.submit
+              zamunda_body = result.body
+              nokogiri_doc = Nokogiri::HTML(zamunda_body)
+              check_subs = nokogiri_doc.css("table.mainouter table.test div[align=\"center\"] td.bottom>a:last-child")
             elsif(@found['subs'][page_counter][link_counter].attr('title') =~ /.(audio|озвучение)/)
               check_subs = 2 #with bg audio    
             else
               check_subs = 0 #without subs 
             end
           end
-          if(episode.nil?)
-            if(!(serie_torrent_with_downcase =~ /(episode|e)\d/))
-              if(page_counter == 0 && link_counter == 0)
-                first_found_torrent = serie_torrent.attr('href')
-                @subs = check_subs
-              end
-              if(serie_torrent_with_downcase =~ /.(hdtv|720p)./)
-                @found_torrent = serie_torrent.attr('href')
-                @subs = check_subs
-                break
-              end
-            end
-          elsif(serie_torrent_with_downcase =~ /.(episode|e)(\d|\s(\d|)|)#{episode}/)
-            if(page_counter == 0 && link_counter == 0)
+          if ((serie_torrent_with_downcase =~ /.(episode|e)(\d|\s(\d|)|)#{episode}/) ||
+          ((!(serie_torrent_with_downcase =~ /(episode|e)\d/)) && episode.nil?))
+            if  ((page_counter == 0 && link_counter == 0 && check_subs != 0) || 
+                  (first_found_torrent.nil? && 
+                    page_counter == (@found['torrent_link'].count -1 ) &&
+                    link_counter == (page_series.count -1 )
+                  )
+                )
               first_found_torrent = serie_torrent.attr('href')
-              @subs = check_subs
+              first_subs = check_subs
             end
             if(serie_torrent_with_downcase =~ /.(hdtv|720p)./)
               @found_torrent = serie_torrent.attr('href')
@@ -194,7 +198,9 @@ class UsersController < ApplicationController
     end
     if(@found_torrent.nil?)
       @found_torrent = first_found_torrent
+      @subs = first_subs
     end
+    @subs = @subs.last.attr('href')
   end
   private
     
