@@ -2,34 +2,38 @@
 <p id="notice"><%=flash[:contacts] %></p>
  
 <div> 
-  <%= form_tag("/users/contacts", method: "post",id:"login") do %>
-    <br>
-    Your E-Mail:
-    <br>
-    <%= label_tag(:user_mail, "") %>
-    
-    <%= text_field_tag(:user_mail,User.find(session[:user_id]).email,:required => true) %>
-    <br>
+    <% if ! session[:user_id] == nil %> 
+        <%= form_tag("/users/contacts", method: "post",id:"login") do %>
+            <br>
+            Your E-Mail:
+            <br>
+            <%= label_tag(:user_mail, "") %>
+            
+            <%= text_field_tag(:user_mail,User.find(session[:user_id]).email,:required => true) %>
+            <br>
 
-    Admin:
-    <br>
-    <%= label_tag(:admin_email, "") %>
-    
-    <%= select_tag :admin_email, 
-        options_for_select(User.where(:block_code => 8).pluck(:email),
-        :required => true) 
-    %><br>
+            Admin:
+            <br>
+            <%= label_tag(:admin_email, "") %>
+            
+            <%= select_tag :admin_email, 
+                options_for_select(User.where(:block_code => 8).pluck(:email),
+                :required => true) 
+            %><br>
 
-    Subject:
-    <br>
-    <%= label_tag(:email_subject, "") %>
-    
-    <%= text_field_tag(:email_subject,"",:required => true) %><br>
-    
-    <%= text_area_tag(:email_content, nil, size: "70x10",:required => true) %>
-    <br>
-    
-    <%= submit_tag("Send") %>
-    <a href="/users/register"><button>Register</button></a>
-  <%end%>
+            Subject:
+            <br>
+            <%= label_tag(:email_subject, "") %>
+            
+            <%= text_field_tag(:email_subject,"",:required => true) %><br>
+            
+            <%= text_area_tag(:email_content, nil, size: "70x10",:required => true) %>
+            <br>
+            
+            <%= submit_tag("Send") %>
+            <a href="/users/register"><button>Register</button></a>
+        <%end%>
+    <%else%>
+        You arent logged in !
+    <%end%>  
 </div>
