@@ -30,11 +30,50 @@ body{
 }
 
 .main {
-	width: 60%;
+	width: 50%;
+	height: 500px;
+	float: left;
+}
+
+.main div {
+	width: 80%;
+	position: relative;
+	border: none;
+	margin: 5px 50px 50px 50px;
+	padding: 15px;
+}
+
+.main div textarea{
+	width: 80%;
+	margin: 2px;
+}
+
+.main div button {
+	width: 20%;
+}
+
+.main div input {
+	width: 80%;
+}
+
+.main div select {
+	width: 80%;
+}
+
+form#login>input[type="submit"] {
+	width: 20%;
 }
 
 .userpanel {
 	width: 20%;
+	height: 500px;
+	float: left;
+}
+
+.navbar {
+	width: 20%;
+	height: 500px;
+	float: left;
 }
 
 footer {
