@@ -26,30 +26,7 @@ class UsersController < ApplicationController
       end
   end
   
-  def search_torents()
-    @xaxa = Array.new
-    page_counter = 0;
-    array_counter = 0;
-    # Series.where('torrent' => 'NULL').each do |serie|
-      # @xaxa[array_counter] = "xa"
-      # array_counter += 1
-    # end
-    
-    begin
-      next_page = "http://zamunda.net/browse.php?c7=1&c33=1&search="+params[:id]+"&incldead=1&field=name&page="+page_counter.to_s
-      agent = Mechanize.new
-      zamunda = agent.get(next_page)
-      login = zamunda.form_with(:action => "takelogin.php")
-      login.field_with(:name => "username").value = "watch1tteam"
-      login.field_with(:name => "password").value = "PowerPassword1"
-      result = login.submit
-      zamunda_body = result.body
-      nokogiri_doc = Nokogiri::HTML(zamunda_body)
-      @xaxa[array_counter] = nokogiri_doc.css("table.test td[align=\"left\"]>a>b")
-      page_counter +=1
-      array_counter += 1
-    end while(@xaxa[array_counter-1].count >= 20)  
-  end
+  
   #GET /user/logout
   def logout
     session[:user_id] = nil;
@@ -146,8 +123,82 @@ class UsersController < ApplicationController
       redirect_to :back
     end
   end
-  
+  def search_torents()
+    serie = params[:serie].to_s
+    season = params[:season].to_i
+    if(params[:episode] == "nil")
+      episode = nil
+    else
+      episode = params[:episode].to_i
+    end
+    @subs = nil
+    @found_torrent = nil
+    @found = {'name'=>Array.new,'torrent_link'=>Array.new,'subs' => Array.new}
+    page_counter = 0;
+    array_counter = 0;
+    begin
+      next_page = "http://zamunda.net/browse.php?c33=1&c7=1&search="+serie+"&incldead=1&field=name&page="+page_counter.to_s
+      agent = Mechanize.new
+      zamunda = agent.get(next_page)
+      login = zamunda.form_with(:action => "takelogin.php")
+      login.field_with(:name => "username").value = "watch1tteam"
+      login.field_with(:name => "password").value = "PowerPassword1"
+      result = login.submit
+      zamunda_body = result.body
+      nokogiri_doc = Nokogiri::HTML(zamunda_body)
+      @found['subs'][array_counter] = nokogiri_doc.css("table.test td[align=\"left\"]>a+img")
+      @found['torrent_link'][array_counter] = nokogiri_doc.css("table.test td[align=\"left\"]>a:nth-child(2n)")
+      page_counter +=1
+      array_counter += 1
+    end while(@found['torrent_link'][array_counter-1].count >= 20)
+    first_found_torrent = "";
+    check_subs = ""
+    @found['torrent_link'].each_with_index do |page_series,page_counter|
+      page_series.each_with_index do |serie_torrent,link_counter|
+        serie_torrent_with_downcase = serie_torrent.attr('href').downcase
+        if(serie_torrent_with_downcase =~ /.(season|s)(\d|\s)#{season}/)
+          if((!@found['subs'][page_counter][link_counter].nil?))
+            if(@found['subs'][page_counter][link_counter].attr('title') =~ /.(subtitles|субтитри)/)
+              check_subs = 1 #with bg subtitles
+            elsif(@found['subs'][page_counter][link_counter].attr('title') =~ /.(audio|озвучение)/)
+              check_subs = 2 #with bg audio    
+            else
+              check_subs = 0 #without subs 
+            end
+          end
+          if(episode.nil?)
+            if(!(serie_torrent_with_downcase =~ /(episode|e)\d/))
+              if(page_counter == 0 && link_counter == 0)
+                first_found_torrent = serie_torrent.attr('href')
+                @subs = check_subs
+              end
+              if(serie_torrent_with_downcase =~ /.(hdtv|720p)./)
+                @found_torrent = serie_torrent.attr('href')
+                @subs = check_subs
+                break
+              end
+            end
+          elsif(serie_torrent_with_downcase =~ /.(episode|e)(\d|\s(\d|)|)#{episode}/)
+            if(page_counter == 0 && link_counter == 0)
+              first_found_torrent = serie_torrent.attr('href')
+              @subs = check_subs
+            end
+            if(serie_torrent_with_downcase =~ /.(hdtv|720p)./)
+              @found_torrent = serie_torrent.attr('href')
+              @subs = check_subs
+              break
+            end
+          end
+        end    
+      end
+    end
+    if(@found_torrent.nil?)
+      @found_torrent = first_found_torrent
+    end
+    
+  end
   private
+    
     def set_user
       if !session[:user_id].nil?
        session[:user_id] = session[:user_id]

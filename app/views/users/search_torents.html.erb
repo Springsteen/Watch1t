@@ -1,6 +1,4 @@
 <p><%=flash[:next_page]%></p>
-<p><% @xaxa.each_with_index do |row,big_index|%>
-  <% row.each_with_index do |name,index|%>
-    <%=big_index*20+index%>  <%=name.text.split("/")[0]%><br>
-  <%end%>
-<%end%></p>
+<p>
+<a href="http://zamunda.net/<%=@found_torrent%>"><%=@found_torrent%></a> <p>Subs:<%=@subs%></p>
+</p>
