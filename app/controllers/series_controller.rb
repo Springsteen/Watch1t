@@ -1,5 +1,5 @@
 class SeriesController < ApplicationController
-  before_action :set_series, only: [:show, :edit, :update, :destroy]
+  before_action :set_series, only: [:show, :edit, :update, :destroy, :synch]
 
   # GET /series
   # GET /series.json
@@ -41,19 +41,19 @@ class SeriesController < ApplicationController
 
   # PATCH/PUT /series/1
   def synch
-    s = @series.first
-    new_serie = Imdb::Serie.new(s.imdb_id)
-
-    s[:title] = new_serie.title.to_s
-    s[:year] = new_serie.year.to_i
-    s[:updated_at] = Time.now
-    s.save
+    new_serie = Imdb::Serie.new(@series.imdb_id)
+    puts new_serie.title
+    puts new_serie.year
+    @series[:title] = new_serie.title.to_s
+    @series[:year] = new_serie.year.to_i
+    @series[:updated_at] = Time.now
+    @series.save
 
     respond_to do |format|
-      if !@series.empty?
+      if !@series.nil?
         format.html { redirect_to @series, notice: 'Serie was successfully updated.' }
       else
-        format.html { redirect_to series_url }
+        format.html { redirect_to series_url, notice: 'Serie was not successfully updated.' }
       end
     end
   end
