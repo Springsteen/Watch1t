@@ -116,13 +116,13 @@ class UsersController < ApplicationController
       flash[:contacts] = "Nqma content"
       redirect_to :back
     else
-      UserMailer.email(params[:admin_email],"User Question: "+params[:email_subject],params[:email_content]).deliver
+      UserMailer.email(params[:admin_email],"User Question: "+params[:email_subject],params[:email_content]+"\n IP: "+request.remote_ip).deliver
       flash[:contacts] = "OK"
       redirect_to :back
     end
   end
   def search_torents
-   update_links()
+    User.update_links()
   end
   def admin_edit_panel
     @user = User.find(params[:user_id])
@@ -148,98 +148,6 @@ class UsersController < ApplicationController
     end
   end
   private
-    def update_links()
-      episodes = Episode.where(torrent_link:nil)
-      episodes.each do |e|
-        serie_air_date = e.air_date.to_s.gsub('-', '').to_i
-        time_now = Time.now.to_s.split(' ')[0].gsub('-', '').to_i
-        if(time_now > serie_air_date)
-          serial_name = Serie.find(Season.find(e.season_id).serie_id).title
-          season = Season.find(e.season_id).season
-          episode = e.episode
-          @result = get_links(serial_name,season,episode)
-          Episode.find(e.id).update(:torrent_link => @result[0],:subs_link => @result[1])
-        end
-      end
-    end 
-    def get_links(serie,season,episode)
-      website="http://zamunda.net/"
-      found = {'torrent_link'=>Array.new,'subs' => Array.new}
-      page_counter = 0;
-      begin
-        next_page = "http://zamunda.net/browse.php?c33=1&c7=1&search="+serie+"&incldead=1&field=name&page="+page_counter.to_s
-        agent = Mechanize.new
-        zamunda = agent.get(next_page)
-        login = zamunda.form_with(:action => "takelogin.php")
-        login.field_with(:name => "username").value = "watch1tteam"
-        login.field_with(:name => "password").value = "PowerPassword1"
-        zamunda_body = login.submit.body
-        nokogiri_doc = Nokogiri::HTML(zamunda_body)
-        nokogiri_doc.css("table.test>tr:not(:first-child)>td[align=\"left\"]").each do |row|
-          subs = Nokogiri::HTML(row.to_s).css("a+img")
-          if(subs.to_s =~ /(subtitles|субтитри)/)
-            subs = website+Nokogiri::HTML(row.to_s).css("a:first-child").first.attr('href')
-          elsif(subs.to_s =~ /(audio|озвучение)/)
-            subs = "with bg audio"
-          else
-            subs = nil
-          end
-          found['torrent_link'] << website+Nokogiri::HTML(row.to_s).css("a:nth-child(2n)").first.attr('href')
-          found['subs'] << subs
-        end
-        page_counter += 1
-      end while(found['torrent_link'].count >= page_counter*20)
-      torrent_links = get_torrent_links(found['torrent_link'],serie,season,episode)
-      if(!torrent_links.empty?)
-        film_number = get_film_number_with_subs(found['subs'],torrent_links)
-        if(!film_number.nil?)
-          if(found['subs'][film_number] != "with bg audio")
-            subs_link = get_subs_link(found['subs'][film_number]) 
-          end
-        else
-          subs_link = nil
-          film_number = torrent_links[0]
-        end
-        torrent_link = found['torrent_link'][film_number]
-      else
-        torrent_link = nil
-        subs_link = nil
-      end
-      return [torrent_link,subs_link]
-    end
-    def get_torrent_links(torrent_links,serie,season,episode=nil)
-      links = Array.new()
-      torrent_links.each_with_index do |link,counter|
-          if(link.downcase =~ /(season|s)(0|\s|)#{season}/) && (link.downcase =~ /(episode|e)(0|00|\s|)#{episode}/ || episode.nil?)
-            if(link.downcase =~ /(720p|1080p)/)
-              links.insert(0,counter)
-            else
-              links << counter
-            end
-          end
-      end 
-      return links
-    end
-    def get_film_number_with_subs(subs_links,torrent_links_numbers)
-      found_subs_number = nil  
-      torrent_links_numbers.each do |number|
-        if(!subs_links[number].nil?)
-          found_subs_number = number
-          break
-        end
-      end 
-      return found_subs_number
-    end
-    def get_subs_link(serie_page)
-      agent = Mechanize.new
-      zamunda = agent.get(serie_page)
-      login = zamunda.form_with(:action => "takelogin.php")
-      login.field_with(:name => "username").value = "watch1tteam"
-      login.field_with(:name => "password").value = "PowerPassword1"
-      zamunda_body = login.submit.body
-      nokogiri_doc = Nokogiri::HTML(zamunda_body)
-      return nokogiri_doc.css("table.mainouter table.test div[align=\"center\"] td.bottom>a:last-child").last.attr('href')
-    end
     def set_user
       if(!session[:user_id].nil?)
         @logged_user=User.find(session[:user_id])
