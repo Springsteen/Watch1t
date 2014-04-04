@@ -97,8 +97,8 @@ class UsersController < ApplicationController
   
   # GET users/destroy
   def destroy
-    # User.find(session[:user_id]).delete
-    # session[:user_id] = nil;
+    User.find(session[:user_id]).delete
+    session[:user_id] = nil;
     respond_to do |format|
       format.html { redirect_to "/", user_panel_notice: "Your account was successfully deleted." }
     end
