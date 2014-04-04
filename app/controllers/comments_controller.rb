@@ -1,52 +1,46 @@
 class CommentsController < ApplicationController
-  before_action :set_comment,:set_user, only: [:post, :edit, :delete]
-
-  # GET /comments/show
-  def show
-    serie_var = "2"
-    epizode = "1"
-    season = "1"
-    @comments = Comment.where(serie: serie_var)
-  end
+  before_action :set_user, only: [:post ,:edit, :delete]
+  before_action :set_comment, only: [:edit, :delete,:edit_menu]
 
   # POST /comments/post
   def post
-    @comment = Comment.new(:user => @logged_user.user,:content => params[:comment],:title => params[:title],:epizode => "1",:season => "1",:serie => "2")
+    @comment = Comment.new(:user => @logged_user.user,:content => params[:comment],:title => params[:title],:episode_id => params[:episode],:season_id => params[:season],:serie_id => params[:serie])
     if @comment.save
       flash[:notice_comment] = 'Comment was successfully created.';
-      redirect_to "/comments/show"
+      redirect_to :back
     else
       flash[:notice_comment] = 'Problem';
-      redirect_to "/comments/show"
+      redirect_to :back
     end
   end
 
   # POST comments/edit
   def edit
-    respond_to do |format|
-      if @comment.update(comment_params)
-        format.html { redirect_to @comment, notice: 'Comment was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @comment.errors, status: :unprocessable_entity }
-      end
+    if @comment.update(:title => params[:title],:content => params[:comment])
+      redirect_to :back
+    else
+      redirect_to :back
     end
   end
+  def edit_menu
+    session[:comment_id] = @comment.id
+    session[:comment_title] = @comment.title
+    session[:comment_content] = @comment.content
+    redirect_to :back
+  end
 
-  # POST /comments/delete
+  # GET /comments/delete
   def delete
-    @comment.destroy
+    @comment.delete
     respond_to do |format|
-      format.html { redirect_to comments_url }
-      format.json { head :no_content }
+      format.html { redirect_to :back }
     end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_comment
-      #@comment = Comment.find(params[:id])
+      @comment = Comment.find(params[:comment_id])
     end
     def set_user
       if !session[:user_id].nil?

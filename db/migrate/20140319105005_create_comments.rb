@@ -6,7 +6,7 @@ class CreateComments < ActiveRecord::Migration
       t.string :content, :null => false
       t.string :serie, :null => false
       t.integer :season, :null => false
-      t.integer:epizode, :null => false
+      t.integer :epizode, :null => false
       t.timestamps
     end
   end

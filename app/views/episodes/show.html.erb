@@ -6,3 +6,9 @@
 </ul>
 
 <%= link_to 'Back', controller: 'series', action: 'index', id: nil%>
+
+<%= render :file => "comments/show" %>
+<%= yield :comments_show %>
+
+<%= render :file => "comments/post" %>
+<%= yield :comment_post %>

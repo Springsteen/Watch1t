@@ -10,5 +10,12 @@
 <%= link_to "List of all seasons", controller: "seasons", action: "list_all_seasons", id: @series.id %> |
 <%= link_to 'Synch', controller: "series", action: "synch", id: @series.id %> |
 
+<%= render :file => "comments/show" %>
+<%= yield :comments_show %>
+
+<%= render :file => "comments/post" %>
+<%= yield :comment_post %>
+
+
 
 

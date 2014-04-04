@@ -1,1 +1,23 @@
-<p id="notice"><%= notice %></p>
+<%content_for :comment_post do%> 
+
+  <p id="notice"><%=flash[:notice_comment]%></p>
+  <% if session[:comment_title].nil? %>
+    <%@form_action = "/comments/post"%>
+  <% else %>
+    <%@form_action = "/comments/edit"%>
+  <% end %>
+    <%= form_tag(@form_action, method: "post",id:"post_comment") do %>
+    <%= label_tag(:title, "Title:") %>
+    <%= text_field_tag(:title,session[:comment_title],:required => true) %><br>
+    <%= hidden_field_tag(:comment_id,session[:comment_id],:required => true) %><br>
+    <%= label_tag(:comment, "Content:") %>
+    <%= text_area_tag(:comment,session[:comment_content],:required => true) %><br>
+    <%= hidden_field_tag(:serie,@current_serie,:required => true) %><br>
+    <%= hidden_field_tag(:season,@current_season) %><br>
+    <%= hidden_field_tag(:episode,@current_episode) %><br>
+    <%= submit_tag("Comment") %>
+  <%end%>
+  <%session[:comment_title] = nil%>
+  <%session[:comment_content] = nil%>
+  <%session[:comment_id] = nil%>
+<%end%>

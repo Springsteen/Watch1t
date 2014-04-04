@@ -42,10 +42,11 @@ Watch1t::Application.routes.draw do
   # ADD EDIT PATH ONLY FOR ADMIN
   # ADD NEW EPISODE PATH ONLY FOR ADMIN
 
-  match 'comments/show',  via: [:get] 
   match 'comments/post',  via: [:post]
   match 'comments/edit',  via: [:post]
-  match 'comments/delete',  via: [:post]
+  get 'comments/edit_menu/:comment_id' => 'comments#edit_menu'
+  match 'comments/delete',  via: [:get]
+  get 'comments/delete/:comment_id' => 'comments#delete'
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

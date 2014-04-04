@@ -10,3 +10,9 @@
 	controller: "episodes", 
 	action: "list_all_episodes", 
 	id: @season.id %> |
+
+<%= render :file => "comments/show" %>
+<%= yield :comments_show %>
+
+<%= render :file => "comments/post" %>
+<%= yield :comment_post %>

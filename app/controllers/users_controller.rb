@@ -129,7 +129,7 @@ class UsersController < ApplicationController
   end
   def admin_update
     user_name = params[:user]
-    user = User.where(:user => user_name).take
+    user = User.find(params[:user__id])
     password = params[:edit_password]
     if password == ""
       password = user.password
@@ -140,7 +140,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       if User.where(user: user_name).count >= 1 && user.user != user_name
         format.html { redirect_to :back, notice: 'This user already exist.'}
-      elsif @logged_user.update(:user => user_name,:password => password,:block_code => account_type)
+      elsif user.update(:user => user_name,:password => password,:block_code => account_type)
         format.html { redirect_to :back, notice: 'Your account was successfully updated.' }
       else
         format.html { redirect_to :back, notice: 'System Problem.' }

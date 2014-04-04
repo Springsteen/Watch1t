@@ -5,6 +5,7 @@
 		<%= text_field_tag(:user,"",:value => @user.user,:required => true) %><br>
 		<%= label_tag(:edit_password, "Password:") %><br>
 		<%= text_field_tag(:edit_password) %><br>
+		<%= hidden_field_tag(:user__id,params[:user_id]) %><br>
 		<%= label_tag(:block_code, "Account Type:") %><br>
 		<select id="block_code" name="block_code">
       <option value="<%=@user.block_code%>">Default</option>
