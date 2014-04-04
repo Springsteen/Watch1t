@@ -10,13 +10,16 @@ Watch1t::Application.routes.draw do
   get 'users/send_contact_mail' => 'users#send_contact_mail'
   match 'users/create', via: [:post]
   match 'users/edit', via: [:get]
+  get 'users/admin_edit_panel/:user_id' => 'users#admin_edit_panel'
+  get 'users/admin_edit_panel' => 'users#choose_a_user' 
   match 'users/update', via: [:post]
+  match 'users/admin_update', via: [:post]
   match 'users/contacts', via: [:post] 
   match 'users/login', via: [:post]
   match 'users/logout', via: [:get]
   match 'users/destroy', via: [:get]
   match 'users/validate_email', via: [:post]
-  get 'users/search_torents/:serie' => 'users#search_torents'
+  get 'users/search_torents' => 'users#search_torents'
 
   get 'series' => 'series#index'
   get 'series/index' => 'series#index'

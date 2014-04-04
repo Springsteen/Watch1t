@@ -1,0 +1,17 @@
+<p id="notice"><%= notice %></p>
+<div>	
+	<%= form_tag("/users/admin_update", method: "post",id:"register") do %>
+		<%= label_tag(:user, "UserName:") %><br>
+		<%= text_field_tag(:user,"",:value => @user.user,:required => true) %><br>
+		<%= label_tag(:edit_password, "Password:") %><br>
+		<%= text_field_tag(:edit_password) %><br>
+		<%= label_tag(:block_code, "Account Type:") %><br>
+		<select id="block_code" name="block_code">
+      <option value="<%=@user.block_code%>">Default</option>
+      <option value="1">Normal</option>
+      <option value="2">Block</option>
+      <option value="8">Admin</option>
+    </select><br><br>
+		<%= submit_tag("Edit") %>
+	<% end %>
+</div>
