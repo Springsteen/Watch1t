@@ -124,11 +124,10 @@ class UsersController < ApplicationController
     end
   end
   def search_torents
-    
-    #find_torents.delay(run_at: 5.minutes.from_now)
+   update_links()
   end
   private
-    def find_links
+    def update_links()
       episodes = Episode.where(torrent_link:nil)
       episodes.each do |e|
         serie_air_date = e.air_date.to_s.gsub('-', '').to_i
@@ -137,17 +136,15 @@ class UsersController < ApplicationController
           serial_name = Serie.find(Season.find(e.season_id).serie_id).title
           season = Season.find(e.season_id).season
           episode = e.episode
-          @result = search_torent(serial_name,season,episode)
-          Episode.update(:torrent_link => @result[0],:subs_link => @result[1])
+          @result = get_links(serial_name,season,episode)
+          Episode.find(e.id).update(:torrent_link => @result[0],:subs_link => @result[1])
         end
       end
     end 
-    def search_torent(serie,season,episode=nil)
-      subs = nil
-      found_torrent = nil
-      found = {'film_link'=>Array.new,'torrent_link'=>Array.new,'subs' => Array.new}
+    def get_links(serie,season,episode)
+      website="http://zamunda.net/"
+      found = {'torrent_link'=>Array.new,'subs' => Array.new}
       page_counter = 0;
-      array_counter = 0;
       begin
         next_page = "http://zamunda.net/browse.php?c33=1&c7=1&search="+serie+"&incldead=1&field=name&page="+page_counter.to_s
         agent = Mechanize.new
@@ -155,68 +152,72 @@ class UsersController < ApplicationController
         login = zamunda.form_with(:action => "takelogin.php")
         login.field_with(:name => "username").value = "watch1tteam"
         login.field_with(:name => "password").value = "PowerPassword1"
-        result = login.submit
-        zamunda_body = result.body
+        zamunda_body = login.submit.body
         nokogiri_doc = Nokogiri::HTML(zamunda_body)
-        found['subs'][array_counter] = nokogiri_doc.css("table.test>tr:not(:first-child)>td[align=\"left\"]>a+img")
-        found['film_link'][array_counter] = nokogiri_doc.css("table.test>tr:not(:first-child)>td[align=\"left\"]>a:first-child")
-        found['torrent_link'][array_counter] = nokogiri_doc.css("table.test>tr:not(:first-child)>td[align=\"left\"]>a:nth-child(2n)")
-        page_counter +=1
-        array_counter += 1
-      end while(found['torrent_link'][array_counter-1].count >= 20)
-      first_found_torrent = "";
-      first_subs = nil;
-      found['torrent_link'].each_with_index do |page_series,page_counter|
-        page_series.each_with_index do |serie_torrent,link_counter|
-         check_subs = 0
-         serie_torrent_with_downcase = serie_torrent.attr('href').downcase
-         if(serie_torrent_with_downcase =~ /.(season|s)(\d|\s)#{season}/)
-           if((!found['subs'][page_counter][link_counter].nil?))
-             if(found['subs'][page_counter][link_counter].attr('title') =~ /.(subtitles|субтитри)/)
-               check_subs = found['film_link'][page_counter][link_counter].attr('href') #with bg subtitles
-               agent = Mechanize.new
-               zamunda = agent.get("http://zamunda.net/"+check_subs)
-               login = zamunda.form_with(:action => "takelogin.php")
-               login.field_with(:name => "username").value = "watch1tteam"
-               login.field_with(:name => "password").value = "PowerPassword1"
-               result = login.submit
-               zamunda_body = result.body
-               nokogiri_doc = Nokogiri::HTML(zamunda_body)
-               check_subs = nokogiri_doc.css("table.mainouter table.test div[align=\"center\"] td.bottom>a:last-child")
-             elsif(found['subs'][page_counter][link_counter].attr('title') =~ /.(audio|озвучение)/)
-               check_subs = 2 #with bg audio    
-             else
-               check_subs = 0 #without subs 
-             end
-           end
-           if ((serie_torrent_with_downcase =~ /.(episode|e)(\d|\s(\d|)|)#{episode}/) ||
-           ((!(serie_torrent_with_downcase =~ /(episode|e)\d/)) && episode.nil?))
-             if  ((page_counter == 0 && link_counter == 0 && check_subs != 0) || 
-                   (first_found_torrent.nil? && 
-                     page_counter == (found['torrent_link'].count -1 ) &&
-                     link_counter == (page_series.count -1 )
-                   )
-                 )
-               first_found_torrent = serie_torrent.attr('href')
-               first_subs = check_subs
-             end
-             if(serie_torrent_with_downcase =~ /.(hdtv|720p)./)
-               found_torrent = serie_torrent.attr('href')
-               subs = check_subs
-               break
-             end
-           end
-         end    
+        nokogiri_doc.css("table.test>tr:not(:first-child)>td[align=\"left\"]").each do |row|
+          subs = Nokogiri::HTML(row.to_s).css("a+img")
+          if(subs.to_s =~ /(subtitles|субтитри)/)
+            subs = website+Nokogiri::HTML(row.to_s).css("a:first-child").first.attr('href')
+          elsif(subs.to_s =~ /(audio|озвучение)/)
+            subs = "with bg audio"
+          else
+            subs = nil
+          end
+          found['torrent_link'] << website+Nokogiri::HTML(row.to_s).css("a:nth-child(2n)").first.attr('href')
+          found['subs'] << subs
         end
+        page_counter += 1
+      end while(found['torrent_link'].count >= page_counter*20)
+      torrent_links = get_torrent_links(found['torrent_link'],serie,season,episode)
+      if(!torrent_links.empty?)
+        film_number = get_film_number_with_subs(found['subs'],torrent_links)
+        if(!film_number.nil?)
+          if(found['subs'][film_number] != "with bg audio")
+            subs_link = get_subs_link(found['subs'][film_number]) 
+          end
+        else
+          subs_link = nil
+          film_number = torrent_links[0]
+        end
+        torrent_link = found['torrent_link'][film_number]
+      else
+        torrent_link = nil
+        subs_link = nil
       end
-      if(found_torrent.nil?)
-        found_torrent = first_found_torrent
-        subs = first_subs
-      end
-      if(subs != 0 && subs != 2)
-       
-      end
-      return [found_torrent,subs]
+      return [torrent_link,subs_link]
+    end
+    def get_torrent_links(torrent_links,serie,season,episode=nil)
+      links = Array.new()
+      torrent_links.each_with_index do |link,counter|
+          if(link.downcase =~ /(season|s)(0|\s|)#{season}/) && (link.downcase =~ /(episode|e)(0|00|\s|)#{episode}/ || episode.nil?)
+            if(link.downcase =~ /(720p|1080p)/)
+              links.insert(0,counter)
+            else
+              links << counter
+            end
+          end
+      end 
+      return links
+    end
+    def get_film_number_with_subs(subs_links,torrent_links_numbers)
+      found_subs_number = nil  
+      torrent_links_numbers.each do |number|
+        if(!subs_links[number].nil?)
+          found_subs_number = number
+          break
+        end
+      end 
+      return found_subs_number
+    end
+    def get_subs_link(serie_page)
+      agent = Mechanize.new
+      zamunda = agent.get(serie_page)
+      login = zamunda.form_with(:action => "takelogin.php")
+      login.field_with(:name => "username").value = "watch1tteam"
+      login.field_with(:name => "password").value = "PowerPassword1"
+      zamunda_body = login.submit.body
+      nokogiri_doc = Nokogiri::HTML(zamunda_body)
+      return nokogiri_doc.css("table.mainouter table.test div[align=\"center\"] td.bottom>a:last-child").last.attr('href')
     end
     def set_user
       #session[:user_id] = nil

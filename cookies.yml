@@ -1,0 +1,153 @@
+---
+zamunda.net:
+  /:
+    russian_lang: !ruby/object:Mechanize::Cookie
+      version: 0
+      httponly: false
+      port: 
+      discard: 
+      comment_url: 
+      expires: Fri, 04 Apr 2014 19:57:01 GMT
+      max_age: 
+      comment: 
+      secure: false
+      path: /
+      domain: zamunda.net
+      accessed_at: 2014-04-03 22:56:34.709482000 +03:00
+      created_at: 2014-04-03 22:56:34.709482000 +03:00
+      name: russian_lang
+      value: 'no'
+      for_domain: true
+      domain_name: !ruby/object:DomainName
+        ipaddr: 
+        hostname: zamunda.net
+        uri_host: zamunda.net
+        tld: net
+        canonical_tld_p: true
+        domain: zamunda.net
+      session: false
+    uid: !ruby/object:Mechanize::Cookie
+      version: 0
+      httponly: false
+      port: 
+      discard: 
+      comment_url: 
+      expires: Tue, 19 Jan 2038 03:14:07 GMT
+      max_age: 
+      comment: 
+      secure: false
+      path: /
+      domain: zamunda.net
+      accessed_at: 2014-04-03 22:56:34.627478000 +03:00
+      created_at: 2014-04-03 22:56:34.618477000 +03:00
+      name: uid
+      value: '3605576'
+      for_domain: true
+      domain_name: !ruby/object:DomainName
+        ipaddr: 
+        hostname: zamunda.net
+        uri_host: zamunda.net
+        tld: net
+        canonical_tld_p: true
+        domain: zamunda.net
+      session: false
+    pass: !ruby/object:Mechanize::Cookie
+      version: 0
+      httponly: false
+      port: 
+      discard: 
+      comment_url: 
+      expires: Tue, 19 Jan 2038 03:14:07 GMT
+      max_age: 
+      comment: 
+      secure: false
+      path: /
+      domain: zamunda.net
+      accessed_at: 2014-04-03 22:56:34.627478000 +03:00
+      created_at: 2014-04-03 22:56:34.619477000 +03:00
+      name: pass
+      value: 368c0a18068c326d7a016f98f1dbec62
+      for_domain: true
+      domain_name: !ruby/object:DomainName
+        ipaddr: 
+        hostname: zamunda.net
+        uri_host: zamunda.net
+        tld: net
+        canonical_tld_p: true
+        domain: zamunda.net
+      session: false
+    cats: !ruby/object:Mechanize::Cookie
+      version: 0
+      httponly: false
+      port: 
+      discard: 
+      comment_url: 
+      expires: Tue, 19 Jan 2038 03:14:07 GMT
+      max_age: 
+      comment: 
+      secure: false
+      path: /
+      domain: zamunda.net
+      accessed_at: 2014-04-03 22:56:34.627478000 +03:00
+      created_at: 2014-04-03 22:56:34.620477000 +03:00
+      name: cats
+      value: '7'
+      for_domain: true
+      domain_name: !ruby/object:DomainName
+        ipaddr: 
+        hostname: zamunda.net
+        uri_host: zamunda.net
+        tld: net
+        canonical_tld_p: true
+        domain: zamunda.net
+      session: false
+    periods: !ruby/object:Mechanize::Cookie
+      version: 0
+      httponly: false
+      port: 
+      discard: 
+      comment_url: 
+      expires: Tue, 19 Jan 2038 03:14:07 GMT
+      max_age: 
+      comment: 
+      secure: false
+      path: /
+      domain: zamunda.net
+      accessed_at: 2014-04-03 22:56:34.627478000 +03:00
+      created_at: 2014-04-03 22:56:34.622477000 +03:00
+      name: periods
+      value: '7'
+      for_domain: true
+      domain_name: !ruby/object:DomainName
+        ipaddr: 
+        hostname: zamunda.net
+        uri_host: zamunda.net
+        tld: net
+        canonical_tld_p: true
+        domain: zamunda.net
+      session: false
+    statuses: !ruby/object:Mechanize::Cookie
+      version: 0
+      httponly: false
+      port: 
+      discard: 
+      comment_url: 
+      expires: Tue, 19 Jan 2038 03:14:07 GMT
+      max_age: 
+      comment: 
+      secure: false
+      path: /
+      domain: zamunda.net
+      accessed_at: 2014-04-03 22:56:34.627478000 +03:00
+      created_at: 2014-04-03 22:56:34.623477000 +03:00
+      name: statuses
+      value: '1'
+      for_domain: true
+      domain_name: !ruby/object:DomainName
+        ipaddr: 
+        hostname: zamunda.net
+        uri_host: zamunda.net
+        tld: net
+        canonical_tld_p: true
+        domain: zamunda.net
+      session: false

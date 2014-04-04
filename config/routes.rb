@@ -16,7 +16,7 @@ Watch1t::Application.routes.draw do
   match 'users/logout', via: [:get]
   match 'users/destroy', via: [:get]
   match 'users/validate_email', via: [:post]
-  get 'users/search_torents/:serie/:season/:episode' => 'users#search_torents'
+  get 'users/search_torents/:serie' => 'users#search_torents'
 
   get 'series' => 'series#index'
   get 'series/index' => 'series#index'
