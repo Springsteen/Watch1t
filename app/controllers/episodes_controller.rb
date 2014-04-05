@@ -1,5 +1,5 @@
 class EpisodesController < ApplicationController
-  before_action :set_episode, only: [:show, :edit, :update, :destroy]
+  before_action :set_episode, only: [:synch_air_date, :show, :edit, :update, :destroy]
 
   # GET /episodes
   # GET /episodes.json
@@ -19,6 +19,23 @@ class EpisodesController < ApplicationController
         format.html { redirect_to :back, notice: 'There arent any episodes in the database.' }
       else
         format.html { render action: 'list_episodes' }
+      end
+    end
+  end
+
+  def synch_air_date 
+    ses = Season.where(id: @episode.season_id).take
+    ser = Serie.where(id: ses.serie_id).take
+    imdb = Imdb::Serie.new(ser.imdb_id)
+    # puts imdb.season(ses.id.to_i).episodes.size
+    @episode.air_date = DateTime.parse(imdb.season(ses.season.to_i).episode(@episode.episode).air_date)
+    @episode.save
+
+    respond_to do |format|
+      if @episode.nil?
+        format.html { redirect_to :back, notice: 'Synch failed.' }
+      else
+        format.html { render action: 'show' }
       end
     end
   end
@@ -76,6 +93,7 @@ class EpisodesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_episode
       @episode = Episode.find(params[:id])
+      @epis = Episode.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

@@ -68,7 +68,7 @@ class SeriesController < ApplicationController
         epi = Episode.new
         epi.season_id = s.id
         epi.title = ses.episode(i.to_i).title.to_s
-        #epi.air_date = ses.episode(i.to_i).air_date
+       # epi.air_date = DateTime.parse(ses.episode(i.to_i).air_date)
         epi.episode = e.episode.to_i
         epi.save
         i+=1
