@@ -1,5 +1,6 @@
 class SeriesController < ApplicationController
   before_action :set_series, only: [:show, :edit, :update, :destroy, :synch]
+  before_action :set_user
 
   # GET /series
   # GET /series.json
@@ -93,5 +94,13 @@ private
     # Never trust parameters from the scary internet, only allow the white list through.
     def series_params
       params[:series]
+    end
+    def set_user
+      if(!session[:user_id].nil?)
+        @logged_user = User.find(session[:user_id])
+      else
+        flash[:subsscription_error] = "Please Login first"
+        redirect_to :back
+      end
     end
 end

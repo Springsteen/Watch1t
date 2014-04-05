@@ -10,6 +10,11 @@
 <%= link_to 'Back', series_path %> |
 <%= link_to "List of all seasons", controller: "seasons", action: "list_all_seasons", id: @series.id %> |
 <%= link_to 'Synch', controller: "series", action: "synch", id: @series.id %> |
+<%if(UserSubscription.where(user_id:@logged_user.id,serie:@series.id).take.nil?)%>
+  <%= link_to 'Follow', controller: "user_subscriptions", action: "create", serie: @series.id %>
+<%else%>
+  <%= link_to 'StopFollow', controller: "user_subscriptions", action: "delete", serie: @series.id %>
+<%end%>
 
 <%= render :file => "comments/show" %>
 <%= yield :comments_show %>

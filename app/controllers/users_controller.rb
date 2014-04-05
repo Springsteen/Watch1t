@@ -5,6 +5,10 @@ class UsersController < ApplicationController
 
   require 'digest/md5'
   #POST /user/login
+  def user_news
+    
+  end
+  #POST /user/login
   def login
       if params[:user].blank? || params[:password].blank?
         flash[:user_panel_notice] = "Don't tuch my HTML code"
