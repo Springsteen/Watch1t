@@ -63,13 +63,15 @@ class SeriesController < ApplicationController
       Episode.where(season_id: s.id).each do |e|
         e.destroy
       end
-
+      i=1
       ses.episodes.each do |e|
         epi = Episode.new
         epi.season_id = s.id
-        epi.title = e.episode_title.to_s
+        epi.title = ses.episode(i.to_i).title.to_s
+        #epi.air_date = ses.episode(i.to_i).air_date
         epi.episode = e.episode.to_i
         epi.save
+        i+=1
       end     
     end
 
