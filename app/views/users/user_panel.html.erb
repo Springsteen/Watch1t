@@ -16,7 +16,7 @@
       <%if(User.find(session[:user_id]).block_code == 8)%>
         <li><a href="/users/admin_edit_panel">User Accounts</a></li>
       <%end%>
-			<li><a href="/users/news">News</a></li>
+			<li><a href="/users/user_news">News</a></li>
 			<li><a href="/users/edit">Edit Account</a></li>
 			<li><a href="/users/destroy" onclick="return confirm('Are you sure?')">Delete Account</a></li>
 			<li><a href="/users/logout">LogOut</a></li>
