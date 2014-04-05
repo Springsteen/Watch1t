@@ -50,6 +50,21 @@ class SeriesController < ApplicationController
     @series[:updated_at] = Time.now
     @series.save
 
+    Season.where(serie_id: @series.id).each do |s|
+      s.destroy  
+    end
+    
+    new_serie.seasons.each do |ses|
+      s = Season.new
+      s.serie_id = @series.id
+      s.season = ses.season_number.to_i
+      
+      # prom = new_serie.season(s.season.to_i).episodes.size
+      # puts s.episodes
+      
+      s.save
+    end
+
     respond_to do |format|
       if !@series.nil?
         format.html { redirect_to @series, notice: 'Serie was successfully updated.' }

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140404230024) do
+ActiveRecord::Schema.define(version: 20140405095035) do
 
   create_table "comments", force: true do |t|
     t.string   "user",       limit: 10, null: false
