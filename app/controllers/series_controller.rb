@@ -46,6 +46,7 @@ class SeriesController < ApplicationController
     puts new_serie.year
     @series[:title] = new_serie.title.to_s
     @series[:year] = new_serie.year.to_i
+    @series[:description] = new_serie.plot.to_s
     @series[:updated_at] = Time.now
     @series.save
 
