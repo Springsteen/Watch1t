@@ -9,7 +9,7 @@
     <%= form_tag(@form_action, method: "post",id:"post_comment") do %>
     <%= label_tag(:title, "Title:") %>
     <%= text_field_tag(:title,session[:comment_title],:required => true) %><br>
-    <%= hidden_field_tag(:comment_id,session[:comment_id],:required => true) %><br>
+    <%= hidden_field_tag(:comment_id,session[:comment_id]) %><br>
     <%= label_tag(:comment, "Content:") %>
     <%= text_area_tag(:comment,session[:comment_content],:required => true) %><br>
     <%= hidden_field_tag(:serie,@current_serie,:required => true) %><br>

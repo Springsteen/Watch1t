@@ -1,0 +1,24 @@
+<h1>News</h1>
+<%if(!@subsriptions.take.nil?)%>
+  <% @new_information.sort{|a,b| b.updated_at <=> a.updated_at}[0..25].each do |new_info|%>
+   
+   <%if(new_info.instance_of?(Serie))%>
+      <h2>Serie Infrmation</h2>
+      <p>Serie Title:<%=new_info.title%></p>
+    <%elsif(new_info.instance_of?(Comment))%>
+      <h2>Comment Infromation</h2>
+      <p>Title: <%=new_info.title%></p>
+      <p>Comment: <%=new_info.content%></p>
+    <%elsif(new_info.instance_of?(Episode))%>
+      <h2>Episodes Information</h2>
+      <p>Title: <%=new_info.title%></p>
+    <%elsif(new_info.instance_of?(Season))%>
+      <h2>Season Information</h2>
+      <p>Title: <%=new_info.title%></p>
+      <p>Season Number: <%=new_info.season%></p>
+    <%end%>
+    
+  <%end%>
+<%else%>
+  <p>You don't have news</p>
+<%end%>

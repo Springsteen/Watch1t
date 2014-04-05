@@ -1,13 +1,8 @@
 class UsersController < ApplicationController
-  before_action :admins_ips
-  before_action :set_user, only: [:validate_email, :update, :edit, :destroy,:admin_edit_panel, :admin_update,:choose_a_user]
+  before_action :set_user, only: [:user_news,:validate_email, :update, :edit, :destroy,:admin_edit_panel, :admin_update,:choose_a_user]
   before_action :admin_security, only: [:admin_edit_panel, :admin_update,:choose_a_user]
 
   require 'digest/md5'
-  #POST /user/login
-  def user_news
-    
-  end
   #POST /user/login
   def login
       if params[:user].blank? || params[:password].blank?
@@ -151,6 +146,25 @@ class UsersController < ApplicationController
       end
     end
   end
+  #Get /users/user_news
+  def user_news
+    @subsriptions = UserSubscription.where(user_id:@logged_user.id)
+    if(!@subsriptions.take.nil?)
+      @new_information = Array.new
+      @subsriptions.each do |subscription|
+        @new_information << Serie.find(subscription.serie)
+        Comment.where(serie_id:subscription.serie).each do |comment1|
+          @new_information << comment1
+        end 
+        Season.where(serie_id:subscription.serie).each do |season|
+          @new_information << season
+          Episode.where(season_id:season.id).each do |episode|
+            @new_information << episode
+          end
+        end
+      end
+    end
+  end
   private
     def set_user
       if(!session[:user_id].nil?)
@@ -168,8 +182,5 @@ class UsersController < ApplicationController
       if(@logged_user.block_code != 8 && request.remote_ip != '127.0.0.1' || request.remote_ip == '0.0.0.0')
         redirect_to "/"
       end
-    end
-    def admins_ips 
-      
     end
 end
