@@ -58,11 +58,19 @@ class SeriesController < ApplicationController
       s = Season.new
       s.serie_id = @series.id
       s.season = ses.season_number.to_i
-      
-      # prom = new_serie.season(s.season.to_i).episodes.size
-      # puts s.episodes
-      
       s.save
+
+      Episode.where(season_id: s.id).each do |e|
+        e.destroy
+      end
+
+      ses.episodes.each do |e|
+        epi = Episode.new
+        epi.season_id = s.id
+        epi.title = e.episode_title.to_s
+        epi.episode = e.episode.to_i
+        epi.save
+      end     
     end
 
     respond_to do |format|
