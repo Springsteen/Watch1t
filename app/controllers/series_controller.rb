@@ -1,5 +1,5 @@
 class SeriesController < ApplicationController
-  before_action :set_series, only: [:rewrite_serial_db, :show, :edit, :update, :destroy, :synch]
+  before_action :set_series, only: [ :show, :edit, :update, :destroy, :synch]
 
   # GET /series
   # GET /series.json
@@ -40,51 +40,33 @@ class SeriesController < ApplicationController
   end
 
   def rewrite_serial_db
-    new_serie = Imdb::Serie.new(@series.imdb_id)
-    @series[:title] = new_serie.title.to_s
-    @series[:year] = new_serie.year.to_i
-    @series[:description] = new_serie.plot.to_s
-    @series[:updated_at] = Time.now
-    @series.save
-
-    Season.where(serie_id: @series.id).each do |s|
-      Episode.where(season_id: s.id).each do |e|
-        e.delete
-      end
-      s.delete  
-    end
-    
-
-    new_serie.seasons.each do |ses|
-      s = Season.new
-      s.serie_id = @series.id
-      s.season = ses.season_number.to_i
-      s.save
-
-      
-      i=1
-      ses.episodes.each do |e|
-        epi = Episode.new
-        epi.season_id = s.id
-        epi.title = ses.episode(i.to_i).title.to_s
-       # epi.air_date = DateTime.parse(ses.episode(i.to_i).air_date)
-        epi.episode = e.episode.to_i
-        epi.save
-        i+=1
-      end     
-    end
-
-    respond_to do |format|
-      if !@series.nil?
-        format.html { redirect_to @series, notice: 'Serie was successfully updated.' }
+    @all_serie = find_all_series()
+    @all_serie.each do |imdb_serie_id|
+      new_serie = Imdb::Serie.new(imdb_serie_id)
+      created_serie = ""
+      if(Serie.where(imdb_id:imdb_serie_id).take.nil?)
+        created_serie = Serie.new(:title=>new_serie.title.to_s,:year=>new_serie.year.to_i,:description=>new_serie.plot.to_s,:imdb_id=>imdb_serie_id).save
       else
-        format.html { redirect_to series_url, notice: 'Serie was not successfully updated.' }
+        created_serie = Serie.where(imdb_id:imdb_serie_id).take
+      end
+      new_serie.seasons.each do |imdb_season|
+        crated_season = ""
+        if(Season.where(season:imdb_season.season_number.to_i,serie_id:created_serie.id).take.nil?)
+          created_season = Season.new(:serie_id=>created_serie.id,:season=>imdb_season.season_number.to_i).save
+        else
+          crated_season = Season.where(season:imdb_season.season_number.to_i,serie_id:created_serie.id).take
+        end
+        imdb_season.episodes.each_with_index do |episode,i=1|
+          if(Episode.where(episode:episode.episode.to_i,season_id:crated_season.id).take.nil?)
+            Episode.new(:episode=>episode.episode,:season_id=>crated_season.id,:title=>episode.title).save
+          end
+        end
       end
     end
   end
   # PATCH/PUT /series/1
   def synch
-    new_serie = Imdb::Serie.new(@series.imdb_id)
+    @new_serie = Imdb::Serie.new(@series.imdb_id)
     @series[:title] = new_serie.title.to_s
     @series[:year] = new_serie.year.to_i
     @series[:description] = new_serie.plot.to_s
@@ -119,5 +101,17 @@ private
     # Never trust parameters from the scary internet, only allow the white list through.
     def series_params
       params[:series]
+    end
+    def find_all_series()
+      series = Array.new
+      # for i in 2001..2014
+        i = 2009
+        Imdb::Search.new(i.to_s).movies().each do |movie|
+          if(movie.title =~ /(TV Series)/)
+            series << movie.id
+          end
+        end
+      # end
+      return series.uniq{|x| x}
     end
 end
