@@ -31,11 +31,13 @@ Watch1t::Application.routes.draw do
   get 'series/:id' => 'series#show'
   match 'series/show',  via: [:get]
   get 'series/:id/update' => 'series#synch'
+  get 'series/:id/update' => 'series#rewrite_serial_db'
 
   get 'list_seasons' => 'seasons#list_all_seasons'
   match 'seasons/list_seasons', via: [:post]
   get 'seasons/:id' => 'seasons#show'
   match 'seasons/show',  via: [:get]
+  get 'seasons/:id/update' => 'seasons#synch'
   # ADD EDIT PATH ONLY FOR ADMIN
   # ADD NEW SEASON PATH ONLY FOR ADMIN
 

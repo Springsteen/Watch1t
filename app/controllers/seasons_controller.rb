@@ -1,5 +1,5 @@
 class SeasonsController < ApplicationController
-  before_action :set_season, only: [:show, :edit, :update, :destroy]
+  before_action :set_season, only: [:synch, :show, :edit, :update, :destroy]
 
   # GET /seasons
   # GET /seasons.json
@@ -11,6 +11,23 @@ class SeasonsController < ApplicationController
   def show
     respond_to do |format|  
         format.html { render action: 'show' }
+    end
+  end
+
+  def synch 
+    ser = Serie.where(id: @season.serie_id).take
+    imdb = Imdb::Serie.new(ser.imdb_id)
+    # puts imdb.season(ses.id.to_i).episodes.size
+    @season.title = imdb.title.to_s
+    @season.updated_at = Time.now
+    @season.save
+
+    respond_to do |format|
+      if @season.nil?
+        format.html { redirect_to :back, notice: 'Synch failed'}
+      else
+        format.html { render action: 'show'}
+      end
     end
   end
 
