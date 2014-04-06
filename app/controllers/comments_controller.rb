@@ -1,7 +1,12 @@
 class CommentsController < ApplicationController
   before_action :set_user, only: [:post ,:edit, :delete]
-  before_action :set_comment, only: [:edit, :delete,:edit_menu]
+  before_action :set_comment, only: [:edit, :delete,:edit_menu,:show]
 
+  
+  # GET /show/:comment_id
+  def show
+    
+  end
   # POST /comments/post
   def post
     @comment = Comment.new(:user => @logged_user.user,:content => params[:comment],:title => params[:title],:episode_id => params[:episode],:season_id => params[:season],:serie_id => params[:serie])

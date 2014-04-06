@@ -52,6 +52,7 @@ Watch1t::Application.routes.draw do
   get 'comments/edit_menu/:comment_id' => 'comments#edit_menu'
   match 'comments/delete',  via: [:get]
   get 'comments/delete/:comment_id' => 'comments#delete'
+  get 'comments/show/:comment_id' => 'comments#show'
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

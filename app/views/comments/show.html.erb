@@ -1,46 +1,19 @@
-<%content_for :comments_show do%> 
-  <%@controller=request.original_url.split('/')[3]%>
-  <%if @controller == "series"%>
-    <%@current_serie = params[:id]%>
-    <%@current_season = nil%>
-    <%@current_episode = nil%>
-  <%elsif @controller == "seasons"%>
-    <%@current_serie = Serie.find(Season.find(params[:id]).serie_id).id%>
-    <%@current_season = params[:id]%>
-    <%@current_episode = nil%>
-  <%elsif @controller == "episodes"%>
-    <%@current_serie = Serie.find(Season.find(Episode.find(params[:id]).season_id).serie_id).id%>
-    <%@current_season = Season.find(Episode.find(params[:id]).season_id).id%>
-    <%@current_episode = params[:id]%>
+<h1>Comment</h1>
+<p>Posted by <%=@comment.user%></p>
+<p>Posted on <%=@comment.created_at%></p>
+<p>Last Edit: <%=@comment.created_at%></p>
+<p>Posted on : 
+<% @link = "/series/"+@comment.serie_id.to_s%>
+<%=Serie.find(@comment.serie_id).title%>
+<%if(!@comment.season_id.nil?)%>
+  <% @link = "/seasons/"+@comment.season_id.to_s%>
+  Season <%=Season.find(@comment.season_id).season%>(<%=Season.find(@comment.season_id).title%>)
+  <%if(!@comment.episode_id.nil?)%>
+    <% @link = "/episodes/"+@comment.episode_id.to_s%>
+    Episode <%=Episode.find(@comment.episode_id).episode%>(<%=Episode.find(@comment.episode_id).title%>).
   <%end%>
-  <%@comments = Comment.show(@current_serie,@current_season,@current_episode)%>
-  <h1>Comments</h1>
-  <table border="2" align="center">
-  <tr><th>Posted by</th><th>Title</th><th>Content</th><th>Posted Date</th><th>Edited Date</th><th>Edit</th><th>Delete</th></tr>
-  <% @comments.each do |comment|%>
-    <tr>
-      <td>
-        <%=comment.user%>
-      </td>
-      <td>
-        <%=comment.title%>
-      </td>
-      <td>
-        <%=comment.content%>
-      </td>
-      <td>
-        <%=comment.created_at%>
-      </td>
-      <td>
-        <%=comment.updated_at%>
-      </td>
-      <td>
-        <a href="/comments/edit_menu/<%=comment.id%>">Edit</a>
-      </td>
-      <td>
-        <a href="/comments/delete/<%=comment.id%>">Delete</a>
-      </td>
-    </tr>
-  <%end%>
-  </table>
 <%end%>
+<a href="<%=@link%>">Link<a>
+</p>
+<p>Comment Title: <%=@comment.title%></p>
+<p>Comment Content: <%=@comment.content%></p>

@@ -14,7 +14,7 @@
 <%if(!@episode.subs_link.nil?)%>
 <a href="<%=@episode.subs_link%>" target="_blank">Download Subs</a>
 <%end%>
-<%= render :file => "comments/show" %>
+<%= render :file => "comments/show_comments" %>
 <%= yield :comments_show %>
 
 <%= render :file => "comments/post" %>
