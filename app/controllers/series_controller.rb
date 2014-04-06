@@ -104,14 +104,13 @@ private
     end
     def find_all_series()
       series = Array.new
-      # for i in 2001..2014
+
         i = 2009
         Imdb::Search.new(i.to_s).movies().each do |movie|
-          if(movie.title =~ /(TV Series)/)
+          if(movie.title =~ /(TV Series)/) and (movie.year.to_i != 0)
             series << movie.id
           end
         end
-      # end
       return series.uniq{|x| x}
     end
 end
