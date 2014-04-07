@@ -46,6 +46,8 @@ Watch1t::Application.routes.draw do
   get 'episodes/:id' => 'episodes#show'
   match 'episodes/show',  via: [:get]
   get 'episodes/:id/update' => 'episodes#synch_air_date'
+
+  get 'episodes/video' => 'episodes#find_video'
   # ADD EDIT PATH ONLY FOR ADMIN
   # ADD NEW EPISODE PATH ONLY FOR ADMIN
 

@@ -12,6 +12,17 @@ class EpisodesController < ApplicationController
   def show
   end
 
+  def find_video
+    #TO BE IMPLEMENTED
+    respond_to do |format|
+      if @episodes.nil?
+        format.html { redirect_to :back, notice: 'There arent any episodes in the database.' }
+      else
+        format.html { render action: 'show_video' }
+      end
+    end
+  end
+
   def list_all_episodes
     @episodes = Episode.where(season_id: params[:id])
     respond_to do |format|

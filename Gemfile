@@ -5,6 +5,8 @@ gem 'rails', '4.0.2'
 
 gem 'imdb', '0.8.1'
 
+gem 'youtube_search', '~> 0.1.7'
+
 gem 'delayed_job'
 
 # Use sqlite3 as the database for Active Record

@@ -7,6 +7,7 @@
 
 <%= link_to 'Back', controller: 'series', action: 'index', id: nil%>
 <%= link_to 'Synch', controller: 'episodes', action: 'synch_air_date', id: @episode.id%>
+<%= link_to 'Find Promo', controller: 'episodes', action: 'find_video', id: @episode.id%>
 
 <%if(!@episode.torrent_link.nil?)%>
 <a href="<%=@episode.torrent_link%>" >Download Torrent</a>
