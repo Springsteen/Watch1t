@@ -1,6 +1,6 @@
 class EpisodesController < ApplicationController
-  before_action :set_episode, only: [:synch_air_date, :show, :edit, :update, :destroy]
-
+  before_action :set_episode, only: [:find_video, :synch_air_date, :show, :edit, :update, :destroy]
+@link
   # GET /episodes
   # GET /episodes.json
   def index
@@ -13,10 +13,23 @@ class EpisodesController < ApplicationController
   end
 
   def find_video
-    #TO BE IMPLEMENTED
+    criteria = 'Arrow S01E01 promo'
+    a = YoutubeSearch.search(criteria).first
+    asd = String.new
+    a.each do |e|
+      if e.to_s =~ /video_id/
+        asd = e.to_s.split
+        asd = asd.last
+        asd.gsub!("\""," ")
+        asd.gsub!("]"," ")
+        asd.gsub!(" ","")
+      end
+    end
+    @link = "http://www.youtube.com/embed/"
+    @link += asd
     respond_to do |format|
-      if @episodes.nil?
-        format.html { redirect_to :back, notice: 'There arent any episodes in the database.' }
+      if @episode.nil?
+        format.html { redirect_to :back, notice: 'Problem.' }
       else
         format.html { render action: 'show_video' }
       end

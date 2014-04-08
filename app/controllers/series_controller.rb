@@ -66,7 +66,7 @@ class SeriesController < ApplicationController
   end
   # PATCH/PUT /series/1
   def synch
-    @new_serie = Imdb::Serie.new(@series.imdb_id)
+    new_serie = Imdb::Serie.new(@series.imdb_id)
     @series[:title] = new_serie.title.to_s
     @series[:year] = new_serie.year.to_i
     @series[:description] = new_serie.plot.to_s
