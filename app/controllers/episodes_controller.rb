@@ -13,20 +13,9 @@ class EpisodesController < ApplicationController
   end
 
   def find_video
-    criteria = 'Arrow S01E01 promo'
-    a = YoutubeSearch.search(criteria).first
-    asd = String.new
-    a.each do |e|
-      if e.to_s =~ /video_id/
-        asd = e.to_s.split
-        asd = asd.last
-        asd.gsub!("\""," ")
-        asd.gsub!("]"," ")
-        asd.gsub!(" ","")
-      end
-    end
+    search = VideoSearch.new
     @link = "http://www.youtube.com/embed/"
-    @link += asd
+    @link += search.find (parse_info (@episode))
     respond_to do |format|
       if @episode.nil?
         format.html { redirect_to :back, notice: 'Problem.' }
@@ -114,6 +103,32 @@ class EpisodesController < ApplicationController
   end
 
   private
+    def parse_info e
+      ses = Season.where(id: e.season_id).take
+      ser = Serie.where(id: ses.serie_id).take
+      imdb = Imdb::Serie.new(ser.imdb_id)
+      output = String.new
+      output += ser.title.gsub!("\"","")
+      output += " "
+      
+      if ses.season < 10 
+        output += "S0"
+        output += ses.season.to_s
+      else
+        output += ses.season.to_s
+      end
+      
+      output += " "
+
+      if e.episode < 10 
+        output += "E0"
+        output += e.episode.to_s
+      else
+        output += ses.season.to_s
+      end
+
+      return output
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_episode
       @episode = Episode.find(params[:id])
