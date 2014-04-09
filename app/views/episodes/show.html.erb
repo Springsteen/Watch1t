@@ -5,16 +5,29 @@
 		<li> Air Date:<%= @episode.air_date %> </li>
 </ul>
 
-<%= link_to 'Back', controller: 'series', action: 'index', id: nil%>
-<%= link_to 'Synch', controller: 'episodes', action: 'synch_air_date', id: @episode.id%>
-<%= link_to 'Find Promo', controller: 'episodes', action: 'find_video', id: @episode.id%>
+<%= link_to 'Back', 
+	controller: 'series', 
+	action: 'index', 
+	id: nil
+%> |
+<%= link_to 'Synch', 
+	controller: 'episodes', 
+	action: 'synch_air_date', 
+	id: @episode.id
+%> |
+<%= link_to 'Find Promo', 
+	controller: 'episodes', 
+	action: 'find_video', 
+	id: @episode.id
+%>
 
 <%if(!@episode.torrent_link.nil?)%>
-<a href="<%=@episode.torrent_link%>" >Download Torrent</a>
+	<a href="<%=@episode.torrent_link%>" >Download Torrent</a>
 <%end%>
 <%if(!@episode.subs_link.nil?)%>
-<a href="<%=@episode.subs_link%>" target="_blank">Download Subs</a>
+	<a href="<%=@episode.subs_link%>" target="_blank">Download Subs</a>
 <%end%>
+
 <%= render :file => "comments/show_comments" %>
 <%= yield :comments_show %>
 

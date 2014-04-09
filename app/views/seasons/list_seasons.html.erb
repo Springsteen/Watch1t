@@ -1,11 +1,25 @@
 <ul>
 
 	<% @seasons.each do |s| %>
-		<li>Season Number: <%= s.season%></li>
-		<li>Season Title: <%= s.title%></li>
-		<li>Created At: <%= s.created_at%></li>
-		<li> <%= link_to "More Information", controller: "seasons", action: "show", id: s.id %> </li>
-		<br>
+		<li>
+			Season Number: 
+			<%= s.season%>
+		</li>
+		
+		<li>
+			Episodes in the season: 
+			<%= Episode.where(season_id: s.id).count%>
+		</li>
+		
+		<!--<li>Created At: <%= s.created_at.to_formatted_s(:long)%></li>-->
+		
+		<li> 
+			<%= link_to "More Information", 
+				controller: "seasons", 
+				action: "show", 
+				id: s.id 
+			%> 
+		</li><br>
 	<% end %>
 
 </ul>

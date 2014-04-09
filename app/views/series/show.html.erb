@@ -6,16 +6,34 @@
 		<li> Description: <%= @series.description %> </li>
 </ul>
 
-<%= link_to 'Search', 'index'%> |
-<%= link_to 'Back', series_path %> |
-<%= link_to "List of all seasons", controller: "seasons", action: "list_all_seasons", id: @series.id %> |
-<%= link_to 'Synch', controller: "series", action: "synch", id: @series.id %> |
-<%= link_to 'Rewrite_database_record', controller: "series", action: "rewrite_serial_db", id: @series.id %>
+<%= link_to 'Back', '/' %> |
+<%= link_to "List of all seasons", 
+	controller: "seasons", 
+	action: "list_all_seasons", 
+	id: @series.id 
+%> |
+<%= link_to 'Synch', 
+	controller: "series", 
+	action: "synch", 
+	id: @series.id 
+%> |
+<%= link_to 'Rewrite', 
+	controller: "series", 
+	action: "rewrite_serie", 
+	id: @series.id 
+%>
+
 <%if(!session[:user_id].nil?)%> |
   <% if(UserSubscription.where(user_id:User.find(session[:user_id]).id,serie:@series.id).take.nil?)%>
-    <%= link_to 'Follow', controller: "user_subscriptions", action: "create", serie: @series.id %>
+    <%= link_to 'Follow', 
+    	controller: "user_subscriptions", 
+    	action: "create", 
+    	serie: @series.id %>
   <%else%>
-    <%= link_to 'StopFollow', controller: "user_subscriptions", action: "delete", serie: @series.id %>
+    <%= link_to 'StopFollow', 
+    	controller: "user_subscriptions", 
+    	action: "delete", 
+    	serie: @series.id %>
   <%end%>
 <%end%>
 

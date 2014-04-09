@@ -32,6 +32,7 @@ Watch1t::Application.routes.draw do
   match 'series/show',  via: [:get]
   get 'series/:id/update' => 'series#synch'
   get 'series/:id/update_database' => 'series#rewrite_serial_db'
+  get 'series/:id/update_serie' => 'series#rewrite_serie'
 
   get 'list_seasons' => 'seasons#list_all_seasons'
   match 'seasons/list_seasons', via: [:post]

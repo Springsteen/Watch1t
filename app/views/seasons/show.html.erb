@@ -1,19 +1,32 @@
 <p id="notice"><%= notice %></p>
 
 <ul>
-		<li> Title: <%= @season.title %> </li> 
-		<li> Year: <%= @season.created_at %> </li>
+		<li> 
+			Season: 
+			<%= @season.season %> 
+		</li>
+
+		<li> 
+			Episodes in the season: 
+			<%= Episode.where(season_id: @season.id).count%> 
+		</li>
 </ul>
 
-<%= link_to 'Back', controller: 'series', action: 'index', id: nil %> |
+<%= link_to 'Back', 
+	controller: 'series', 
+	action: 'show', 
+	id: @season.serie_id 
+%> |
 <%= link_to "List of all episodes", 
 	controller: "episodes", 
 	action: "list_all_episodes", 
-	id: @season.id %> |
+	id: @season.id 
+%> |
 <%= link_to "Synch", 
 	controller: "seasons", 
 	action: "synch", 
-	id: @season.id %> |	
+	id: @season.id 
+%>	
 
 <%= render :file => "comments/show_comments" %>
 <%= yield :comments_show %>
