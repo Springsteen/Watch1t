@@ -1,5 +1,6 @@
 class SeriesController < ApplicationController
-  before_action :set_series, only: [:rewrite_serie, :show, :edit, :update, :destroy, :synch]
+  before_action :set_series, only: [:rewrite_serie,:show, :edit, :update, :destroy, :synch]
+  before_action :set_user, only: [:rewrite_serial_db]
 
   # GET /series
   # GET /series.json
@@ -80,10 +81,13 @@ class SeriesController < ApplicationController
   end
 
   def rewrite_serial_db
+    if(@logged_user.block_code != 8)
+      redirect_to "/"
+    end
     @all_serie = find_all_series()
     @all_serie.each do |imdb_serie_id|
-      if(@all_serie.year != 0)
-        new_serie = Imdb::Serie.new(imdb_serie_id)
+      new_serie = Imdb::Serie.new(imdb_serie_id)
+      if(new_serie.year != 0)
         created_serie = ""
         if(Serie.where(imdb_id:imdb_serie_id).take.nil?)
           created_serie = Serie.new(:title=>new_serie.title.to_s,:year=>new_serie.year.to_i,:description=>new_serie.plot.to_s,:imdb_id=>imdb_serie_id).save
@@ -144,15 +148,22 @@ private
     def series_params
       params[:series]
     end
+    def set_user
+      if(!session[:user_id].nil?)
+        @logged_user=User.find(session[:user_id])
+      else
+        redirect_to "/"
+      end
+    end
     def find_all_series()
       series = Array.new
-
-        i = 2009
+      for i in 2012..2014
         Imdb::Search.new(i.to_s).movies().each do |movie|
           if(movie.title =~ /(TV Series)/) and (movie.year.to_i != 0)
             series << movie.id
           end
         end
+      end
       return series.uniq{|x| x}
     end
 end
