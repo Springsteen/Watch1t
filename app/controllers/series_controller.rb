@@ -82,23 +82,25 @@ class SeriesController < ApplicationController
   def rewrite_serial_db
     @all_serie = find_all_series()
     @all_serie.each do |imdb_serie_id|
-      new_serie = Imdb::Serie.new(imdb_serie_id)
-      created_serie = ""
-      if(Serie.where(imdb_id:imdb_serie_id).take.nil?)
-        created_serie = Serie.new(:title=>new_serie.title.to_s,:year=>new_serie.year.to_i,:description=>new_serie.plot.to_s,:imdb_id=>imdb_serie_id).save
-      else
-        created_serie = Serie.where(imdb_id:imdb_serie_id).take
-      end
-      new_serie.seasons.each do |imdb_season|
-        crated_season = ""
-        if(Season.where(season:imdb_season.season_number.to_i,serie_id:created_serie.id).take.nil?)
-          created_season = Season.new(:serie_id=>created_serie.id,:season=>imdb_season.season_number.to_i).save
+      if(@all_serie.year != 0)
+        new_serie = Imdb::Serie.new(imdb_serie_id)
+        created_serie = ""
+        if(Serie.where(imdb_id:imdb_serie_id).take.nil?)
+          created_serie = Serie.new(:title=>new_serie.title.to_s,:year=>new_serie.year.to_i,:description=>new_serie.plot.to_s,:imdb_id=>imdb_serie_id).save
         else
-          crated_season = Season.where(season:imdb_season.season_number.to_i,serie_id:created_serie.id).take
+          created_serie = Serie.where(imdb_id:imdb_serie_id).take
         end
-        imdb_season.episodes.each_with_index do |episode,i=1|
-          if(Episode.where(episode:episode.episode.to_i,season_id:crated_season.id).take.nil?)
-            Episode.new(:episode=>episode.episode,:season_id=>crated_season.id,:title=>episode.title).save
+        new_serie.seasons.each do |imdb_season|
+          crated_season = ""
+          if(Season.where(season:imdb_season.season_number.to_i,serie_id:created_serie.id).take.nil?)
+            created_season = Season.new(:serie_id=>created_serie.id,:season=>imdb_season.season_number.to_i).save
+          else
+            crated_season = Season.where(season:imdb_season.season_number.to_i,serie_id:created_serie.id).take
+          end
+          imdb_season.episodes.each_with_index do |episode,i=1|
+            if(Episode.where(episode:episode.episode.to_i,season_id:crated_season.id).take.nil?)
+              Episode.new(:episode=>episode.episode,:season_id=>crated_season.id,:title=>episode.title).save
+            end
           end
         end
       end

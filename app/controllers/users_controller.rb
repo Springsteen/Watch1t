@@ -179,7 +179,7 @@ class UsersController < ApplicationController
       end
     end
     def admin_security
-      if(@logged_user.block_code != 8 && request.remote_ip != '127.0.0.1' || request.remote_ip == '0.0.0.0')
+      if(@logged_user.block_code != 8 && request.remote_ip != '127.0.0.1' && request.remote_ip != '0.0.0.0')
         redirect_to "/"
       end
     end
