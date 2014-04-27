@@ -1,8 +1,20 @@
 <%content_for :navigation_sidebar do%> 
 
 	<ul class="menu">
-		<li><a href="/users/send_contact_mail">Contacts</a></li>
-		<li><a href="/">Search</a></li>
+		<li>
+			<%= button_to "Contacts", 
+				"/users/send_contact_mail", 
+				:class => "button", 
+				:method => :get  
+			%>
+		</li>
+		<li>
+			<%= button_to "Search", 
+				"/", 
+				:class => "button", 
+				:method => :get  
+			%>
+		</li>
 	</ul>
 
-<%end%> 
+<%end%>

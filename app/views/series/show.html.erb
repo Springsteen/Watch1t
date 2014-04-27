@@ -1,12 +1,11 @@
 <p id="notice"><%= notice %></p>
 
-<ul>
-		<li> Title: <%= @series.title %> </li> 
-		<li> Year: <%= @series.year %> </li>
-		<li> Description: <%= @series.description %> </li>
+<ul class="show-list">
+		<li> Title- <span class = "info"><%= @series.title %></span> </li><br> 
+		<li> Year- <span class = "info"><%= @series.year %></span> </li><br>
+		<li id = "descr-li"> Description-<br> <span class = "info"><%= @series.description %></span> </li>
 </ul>
 
-<%= link_to 'Back', '/' %> |
 <%= link_to "List of all seasons", 
 	controller: "seasons", 
 	action: "list_all_seasons", 

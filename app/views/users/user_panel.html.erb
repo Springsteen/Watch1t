@@ -1,32 +1,75 @@
 <%content_for :user_panel do%> 
-  <h1>User Panel</h1>
+  	<h1>User Panel</h1>
+	
 	<p id="notice"><%=flash[:user_panel_notice]%></p>
-  <%if session[:user_id].nil?%>
+  	
+  	<%if session[:user_id].nil?%>
+		
 		<%= form_tag("/users/login", method: "post",id:"login") do %>
 			<%= label_tag(:user, "UserName:") %>
 			<%= text_field_tag(:user,"",:required => true) %><br>
 			<%= label_tag(:password, "Password:") %>
 			<%= password_field_tag(:password,"",:required => true) %><br>
 			<%= submit_tag("Login") %>
-			<a href="/users/register"><button>Register</button></a>
+			<a href="/users/register"><button class="badbutton">Register</button></a>
 		<%end%>
-	<%elsif (!session[:user_id].nil? && User.find(session[:user_id]).email_check == (1).to_s) %>
+
+	<%elsif (!session[:user_id].nil? && 
+			User.find(session[:user_id]).email_check == (1).to_s)%>
+		
 		<h2>Welcome <%=User.find(session[:user_id]).user%></h2>
 		<ul class="menu">
-      <%if(User.find(session[:user_id]).block_code == 8 || request.remote_ip == '127.0.0.1' || request.remote_ip == '0.0.0.0')%>
-        <li><a href="/users/admin_edit_panel">User Accounts</a></li>
-      <%end%>
-			<li><a href="/users/user_news">News</a></li>
-			<li><a href="/users/edit">Edit Account</a></li>
-			<li><a href="/users/destroy" onclick="return confirm('Are you sure?')">Delete Account</a></li>
-			<li><a href="/users/logout">LogOut</a></li>
+	      	<%if(User.find(session[:user_id]).block_code == 8 || 
+	      		request.remote_ip == '127.0.0.1' || 
+	      		request.remote_ip == '0.0.0.0')%>
+	        	<li>
+	        		<%= button_to "User Accounts", 
+						"/users/admin_edit_panel", 
+						:class => "button", 
+						:method => :get  
+					%>
+				</li>
+	      	<%end%>
+			<li>
+				<%= button_to "User's News", 
+					"/users/user_news", 
+					:class => "button", 
+					:method => :get  
+				%>
+			</li>
+			<li>
+				<%= button_to "Edit Account", 
+					"/users/edit", 
+					:class => "button", 
+					:method => :get  
+				%>
+			</li>
+			<li>
+				<%= button_to "Delete",
+    				@user,
+       				:method=>:delete,
+       				:class=>:destroy,
+       				:confirm=>"Are you sure?"
+       			%>
+       		</li>
+			<li>
+				<%= button_to "Log Out", 
+					"/users/logout", 
+					:class => "button", 
+					:method => :get  
+				%>
+			</li>
 		</ul>
-   <%else%>
-    <%= form_tag("/users/validate_email", method: "post",id:"validate") do %>
-      <%= label_tag(:validate_mail_code, "Validate Code:") %>
-      <%= text_field_tag(:validate_mail_code,"",:required => true) %><br>
-      <%= submit_tag("Validate") %>
-			<button><a href="/users/logout">LogOut</a></button>
-    <% end %>
+
+   	<%else%>
+    	
+    	<%= form_tag("/users/validate_email", method: "post",id:"validate") do %>
+      		<%= label_tag(:validate_mail_code, "Validate Code:") %>
+      		<%= text_field_tag(:validate_mail_code,"",:required => true) %><br>
+      		<%= submit_tag("Validate") %>
+			<button class="badbutton"><a href="/users/logout">LogOut</a></button>
+    	<% end %>
+	
 	<%end%>
+
 <% end %>

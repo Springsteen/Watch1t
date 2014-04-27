@@ -1,9 +1,9 @@
 <h1>Search results</h1>
 
-<ul>
-	<% @series.each do |s| %>
-		<li> Title: <%= s.title %> </li> 
-		<li> Year: <%= s.year %> </li>
-		<li> <%= link_to "More Information", controller: "series", action: "show", id: s.id %> </li>
-	<% end %>
-</ul>
+<% @series.each do |s| %>
+	<ul class="list">
+		<li> <%= s.title %>- </li> 
+		<li> <%= s.year %> </li><br>
+		<li id="more-info"> <%= link_to "More Information", controller: "series", action: "show", id: s.id %> </li>
+	</ul><br>
+<% end %>

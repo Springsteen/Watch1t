@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 <div>	
-	<%= form_tag("/users/update", method: "post",id:"register") do %>
+	<%= form_tag("/users/update", method: "post", id:"register") do %>
 		<%= label_tag(:user, "UserName:") %><br>
 		<%= text_field_tag(:user,"",:value => @logged_user.user,:required => true) %><br>
 		<%= label_tag(:edit_password, "Password:") %><br>
@@ -257,7 +257,6 @@
 			<option value="Wallis and Futuna">Wallis and Futuna</option>
 			<option value="British Virgin Islands">British Virgin Islands</option>
 		</select><br>
-		<p>By registration you agree with <a href="">Terms of Agreement</a>! </p><br>
 		<%= submit_tag("Edit") %>
 	<% end %>
 </div>

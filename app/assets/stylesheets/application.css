@@ -12,27 +12,37 @@
  *= require_tree .
  */
 *{
-	color:black;
+	color: #FFFFFF;
 	font-size:16px;
-	font-family: verdana, arial, helvetica, sans-serif;
+	font-family: "Noto Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
+
+a {
+	text-decoration: none;
+}
+
 body{
-	background-color:#99CCFF;
-	text-align:center;
+	background-color: #FFFFFF;
+	text-align: center;
+}
+
+.content {
+	height: 600px;
 }
 
 .content div {
 	float: left;
-	border: 2px solid #383838; 
+	border: 1px solid #383838; 
 	padding: 5px;
 	margin: 5px;
-	background-color: grey ;
+	background-color: #585858;
 }
 
 .main {
 	width: 50%;
-	min-height: 500px;
+	height: 90%;
 	float: left;
+	overflow-y: scroll;
 }
 
 .main div {
@@ -64,16 +74,44 @@ form#login>input[type="submit"] {
 	width: 20%;
 }
 
+form#login>* {
+	width: 250px;
+	margin: 1%;
+}
+
+form#register>input[type="submit"] {
+	width: 100px;
+}
+
+form#register>input, select {
+	width: 250px;
+}
+
+#country {
+	width: 250px;
+}
+
 .userpanel {
-	width: 20%;
-	height: 500px;
+	width: 24%;
+	height: 90%;
 	float: left;
+	border-radius: 0 50px 50px 0;
+}
+
+.userpanel div {
+	border: none;
+	/*override the .content div, so form_tag hidden field border wont appear */
+}
+
+.userpanel ul li {
+	text-decoration: none;
 }
 
 .navbar {
 	width: 20%;
-	height: 500px;
+	height: 90%;
 	float: left;
+	border-radius: 50px 0 0 50px;
 }
 
 footer {
@@ -82,18 +120,31 @@ footer {
 
 input,select,textarea,button{
 	color:black;
-	background-color:#FFCC66;
+	background-color:#FFFFFF;
 	border-radius:5px;
 	border:2px solid white;
 }
+
 input:focus{
-	border:2px solid lightgreen;
+	border:2px solid #FFFFFF;
 }
-input[type="submit"],button{
-	border-radius:20px;
-	border:2px solid #383838 ;
-	border-bottom-width:4px;
+
+.badbutton{
+	width: 70px;
 }
+
+input[type="submit"], button{
+	border-radius: 20px;
+	border: 1px solid #FFFFFF ;
+	border-bottom-width: 4px;
+	width: 120px;
+	margin: 4px;
+}
+
 input[type="submit"]:hover,button:hover{
-	border:3px solid LightGreen;
+	border: 1px solid black;
+	border-radius: 20px;
+	border-bottom-width: 4px;
+	width: 120px;
+	margin: 4p
 }

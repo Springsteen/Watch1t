@@ -13,7 +13,7 @@
 
 
     <%= form_tag :controller => 'series', :action => 'search', :method => 'get' do %>
-      <%= text_field_tag :search, params[:search], :id => 'search_field' %>
+      <%= text_field_tag :search, params[:search], :id => 'search_field' %><br>
       <%= submit_tag "Search", :name => nil %> 
       <%= button_tag "Reset", type: :reset %>
     <% end %> 

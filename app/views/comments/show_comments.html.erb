@@ -15,32 +15,20 @@
   <%end%>
   <%@comments = Comment.show(@current_serie,@current_season,@current_episode)%>
   <h1>Comments</h1>
-  <table border="2" align="center">
-  <tr><th>Posted by</th><th>Title</th><th>Content</th><th>Posted Date</th><th>Edited Date</th><th>Edit</th><th>Delete</th></tr>
+  
   <% @comments.each do |comment|%>
-    <tr>
-      <td>
-        <%=comment.user%>
-      </td>
-      <td>
-        <%=comment.title%>
-      </td>
-      <td>
+    <ul class="comments">
+      <li>
+        <%=comment.user%> said: <br>
+      </li>
+      <li>
         <%=comment.content%>
-      </td>
-      <td>
-        <%=comment.created_at%>
-      </td>
-      <td>
-        <%=comment.updated_at%>
-      </td>
-      <td>
-        <a href="/comments/edit_menu/<%=comment.id%>">Edit</a>
-      </td>
-      <td>
-        <a href="/comments/delete/<%=comment.id%>">Delete</a>
-      </td>
-    </tr>
+      </li>
+      <li>
+        at: <%=comment.created_at%>
+      </li>
+    </ul>
+    <a href="/comments/edit_menu/<%=comment.id%>">Edit</a>
+    <a href="/comments/delete/<%=comment.id%>">Delete</a>
   <%end%>
-  </table>
 <%end%>

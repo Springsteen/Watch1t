@@ -2,18 +2,16 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-ul.menu>li{
-  display:block;
+ul.menu {
+	padding: 0px;
+	margin-left: 25%;
+	margin-right: 25%; 
 }
 
-ul.menu>li>a{
-  text-decoration:none;
+ul.menu>li {
+  	display: block;
 }
 
-ul.menu>li>a:hover{
-  color:gold;
-}
-
-ul.menu{
-  padding:0px;
+ul.menu>li div {
+  	border: none;
 }
