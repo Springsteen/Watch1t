@@ -14,12 +14,15 @@ ul.list-epi>li{
 	font-size: 18px;
 }
 
-ul.list-epi>li#epi-more-info {
+ul.list-epi>li.epi-more-info {
 	float: right;
 	padding-bottom: 5px;
+	clear: left;
+	margin-left: 5px;
+	margin-right: 5px;
 }
 
-ul.list-epi>li#epi-more-info:hover {
+ul.list-epi>li.epi-more-info:hover {
 	text-decoration: underline;
 }
 

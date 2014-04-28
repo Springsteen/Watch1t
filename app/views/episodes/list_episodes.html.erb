@@ -2,7 +2,31 @@
 	<ul class="list-epi">
 		<li> <%= e.title %> </li>
 		<li> Air Date /<%= e.air_date %>/ </li>
-		<li id="epi-more-info"> <%= link_to "More Information", controller: "episodes", action: "show", id: e.id %> </li>
+		<li class="epi-more-info"> 
+			<%= link_to "More Information", 
+				controller: "episodes", 
+				action: "show", 
+				id: e.id 
+			%> 
+		</li>
+		<li class="epi-more-info">
+			<%= link_to 'Back', :back
+			%> 
+		</li>
+		<li class="epi-more-info">
+			<%= link_to 'Synch', 
+				controller: 'episodes', 
+				action: 'synch_air_date', 
+				id: e.id
+			%> 
+		</li>
+		<li class="epi-more-info">
+			<%= link_to 'Find Promo', 
+				controller: 'episodes', 
+				action: 'find_video', 
+				id: e.id
+			%>
+		</li>	
 		<br>
 	</ul>
 <% end %>

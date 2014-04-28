@@ -72,7 +72,7 @@ class SeriesController < ApplicationController
   def search
     @series = Serie.search params[:search]
     respond_to do |format|
-    	if @series.empty?
+    	if @series.nil? || @series.empty?
     		format.html {redirect_to :back, notice: "There arent any matches in the database !" }
       else
     		format.html {render "result"} 
@@ -121,7 +121,7 @@ class SeriesController < ApplicationController
 
     respond_to do |format|
       if !@series.nil?
-        format.html { redirect_to @series, notice: 'Serie was successfully updated.' }
+        format.html { redirect_to :back, notice: 'Serie was successfully updated.' }
       else
         format.html { redirect_to series_url, notice: 'Serie was not successfully updated.' }
       end

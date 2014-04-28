@@ -13,11 +13,11 @@
 		<!--<li>Created At: <%= s.created_at.to_formatted_s(:long)%></li>-->
 		
 		<li id="ses-more-info"> 
-			<%= link_to "More Information", 
-				controller: "seasons", 
-				action: "show", 
+			<%= link_to "List of all episodes", 
+				controller: "episodes", 
+				action: "list_all_episodes", 
 				id: s.id 
-			%> 
+			%>
 		</li><br>
 	</ul>
 <% end %>
