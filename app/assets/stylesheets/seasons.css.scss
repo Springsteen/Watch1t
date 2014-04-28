@@ -1,3 +1,49 @@
 // Place all the styles related to the Seasons controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+ul.ses-list {
+	list-style-type: none;
+	border-bottom: 1px solid #FFFFFF;
+	overflow: hidden;
+}
+
+ul.ses-list>li {
+	float: left;
+	margin-right: 10px;
+	clear: both;
+	font-size: 18px;
+}
+
+ul.ses-list>li#ses-more-info {
+	float: right;
+	padding-bottom: 5px; 
+}
+
+ul.ses-list>li#ses-more-info:hover {
+	text-decoration: underline;
+}
+
+ul.show-ses {
+	list-style-type: none;
+	border-bottom: 1px solid #FFFFFF;
+	overflow: hidden;
+}
+
+ul.show-ses>li {
+	float: left;
+	margin-right: 10px;
+	clear: both;
+	font-size: 20px;
+}
+
+ul.nav-menu {
+	list-style-type: none;
+	overflow: hidden;
+}
+
+ul.nav-menu>li {
+	float: left;
+	margin-right: 10px;
+	font-size: 15px;	
+}

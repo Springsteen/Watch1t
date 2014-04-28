@@ -71,7 +71,7 @@ body{
 }
 
 form#login>input[type="submit"] {
-	width: 20%;
+	width: 120px;
 }
 
 form#login>* {
@@ -126,11 +126,11 @@ input,select,textarea,button{
 }
 
 input:focus{
-	border:2px solid #FFFFFF;
+	border:1px solid #FFFFFF;
 }
 
 .badbutton{
-	width: 70px;
+	width: 120px;
 }
 
 input[type="submit"], button{
@@ -146,5 +146,5 @@ input[type="submit"]:hover,button:hover{
 	border-radius: 20px;
 	border-bottom-width: 4px;
 	width: 120px;
-	margin: 4p
+	margin: 4px;
 }

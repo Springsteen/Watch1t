@@ -25,10 +25,12 @@
         <%=comment.content%>
       </li>
       <li>
-        at: <%=comment.created_at%>
+        at: <%=comment.created_at.to_date%>
+      </li><br>
+      <li class="comnt-menu">
+        <a href="/comments/edit_menu/<%=comment.id%>">Edit</a> |
+        <a href="/comments/delete/<%=comment.id%>">Delete</a>
       </li>
     </ul>
-    <a href="/comments/edit_menu/<%=comment.id%>">Edit</a>
-    <a href="/comments/delete/<%=comment.id%>">Delete</a>
   <%end%>
 <%end%>

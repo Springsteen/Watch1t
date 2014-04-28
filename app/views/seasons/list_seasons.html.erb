@@ -1,25 +1,23 @@
-<ul>
-
-	<% @seasons.each do |s| %>
+<% @seasons.each do |s| %>
+	<ul class= "ses-list">
 		<li>
-			Season Number: 
+			Season 
 			<%= s.season%>
 		</li>
 		
 		<li>
-			Episodes in the season: 
+			Episodes in the season - 
 			<%= Episode.where(season_id: s.id).count%>
 		</li>
 		
 		<!--<li>Created At: <%= s.created_at.to_formatted_s(:long)%></li>-->
 		
-		<li> 
+		<li id="ses-more-info"> 
 			<%= link_to "More Information", 
 				controller: "seasons", 
 				action: "show", 
 				id: s.id 
 			%> 
 		</li><br>
-	<% end %>
-
-</ul>
+	</ul>
+<% end %>

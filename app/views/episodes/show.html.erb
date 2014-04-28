@@ -1,25 +1,32 @@
 <p id="notice"><%= notice %></p>
 
-<ul>
-		<li> Title: <%= @episode.title %> </li> 
-		<li> Air Date:<%= @episode.air_date %> </li>
+<ul class="show-epi">
+		<li> <%= @episode.title %> </li> 
+		<li> Air Date /<%= @episode.air_date %>/ </li>
 </ul>
-
-<%= link_to 'Back', 
-	controller: 'series', 
-	action: 'index', 
-	id: nil
-%> |
-<%= link_to 'Synch', 
-	controller: 'episodes', 
-	action: 'synch_air_date', 
-	id: @episode.id
-%> |
-<%= link_to 'Find Promo', 
-	controller: 'episodes', 
-	action: 'find_video', 
-	id: @episode.id
-%>
+<ul class="epi-nav-menu">
+	<li>
+		<%= link_to 'Back', 
+			controller: 'episodes', 
+			action: 'list_all_episodes', 
+			id: @episode.season_id
+		%> |
+	</li>
+	<li>
+		<%= link_to 'Synch', 
+			controller: 'episodes', 
+			action: 'synch_air_date', 
+			id: @episode.id
+		%> |
+	</li>
+	<li>
+		<%= link_to 'Find Promo', 
+			controller: 'episodes', 
+			action: 'find_video', 
+			id: @episode.id
+		%>
+	</li>	
+</ul>
 
 <%if(!@episode.torrent_link.nil?)%>
 	<a href="<%=@episode.torrent_link%>" >Download Torrent</a>

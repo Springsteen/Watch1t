@@ -1,11 +1,8 @@
-
-<ul>
-
-	<% @episodes.each do |e| %>
-		<li> Title:<%= e.title %> </li>
-		<li> Air Date:<%= e.air_date %> </li>
-		<li> <%= link_to "More Information", controller: "episodes", action: "show", id: e.id %> </li>
+<% @episodes.each do |e| %>
+	<ul class="list-epi">
+		<li> <%= e.title %> </li>
+		<li> Air Date /<%= e.air_date %>/ </li>
+		<li id="epi-more-info"> <%= link_to "More Information", controller: "episodes", action: "show", id: e.id %> </li>
 		<br>
-	<% end %>
-
-</ul>
+	</ul>
+<% end %>

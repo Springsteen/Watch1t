@@ -41,3 +41,16 @@ ul.show-list>li {
 ul.show-list>li#descr-li{
 	text-align: left;
 }
+
+ul>li.comnt-menu {
+	border-top: 1px solid #FFFFFF;
+	padding-top: 10px;
+}
+
+form#post_comment> input,textarea {
+	width: 300px;
+}
+
+form#post_comment>input[type="submit"] {
+	width: 120px;
+}

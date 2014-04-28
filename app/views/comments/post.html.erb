@@ -7,10 +7,10 @@
     <%@form_action = "/comments/edit"%>
   <% end %>
     <%= form_tag(@form_action, method: "post",id:"post_comment") do %>
-    <%= label_tag(:title, "Title:") %>
+    <%= label_tag(:title, "Title:") %><br>
     <%= text_field_tag(:title,session[:comment_title],:required => true) %><br>
     <%= hidden_field_tag(:comment_id,session[:comment_id]) %><br>
-    <%= label_tag(:comment, "Content:") %>
+    <%= label_tag(:comment, "Content:") %><br>
     <%= text_area_tag(:comment,session[:comment_content],:required => true) %><br>
     <%= hidden_field_tag(:serie,@current_serie,:required => true) %><br>
     <%= hidden_field_tag(:season,@current_season) %><br>
