@@ -1,22 +1,8 @@
 <h1>Search for serie</h1>
 <p><%=notice %></p>
-<table>
-  <thead>
-    <tr>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
 
-  <tbody>
-
-
-    <%= form_tag :controller => 'series', :action => 'search', :method => 'get' do %>
-      <%= text_field_tag :search, params[:search], :id => 'search_field' %><br>
-      <%= submit_tag "Search", :name => nil %> 
-      <%= button_tag "Reset", type: :reset %>
-    <% end %> 
-
-  </tbody>
-</table>
+<%= form_tag :controller => 'series', :action => 'search', :method => 'get' do %>
+  <%= text_field_tag :search, params[:search], :id => 'search_field' %><br>
+  <%= submit_tag "Search", :name => nil%> 
+  <%= button_tag "Reset", type: :reset %>
+<% end %> 

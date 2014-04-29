@@ -1,16 +1,43 @@
 <h1>News</h1>
+
 <%if(!@subsriptions.take.nil?)%>
-  <% @new_information.sort{|a,b| b.updated_at <=> a.updated_at}.each do |new_info|%>
-   <%if(new_info.instance_of?(Serie))%>
-      <p>The infromation for <a href="series/<%=new_info.id%>"><%=new_info.title%></a> was updated</p>
-    <%elsif(new_info.instance_of?(Comment))%>
-      <p><%=new_info.user%> write a new comment on <a href="/comments/show/<%=new_info.id%>"><%=Serie.find(new_info.serie_id).title%></a></p>
-    <%elsif(new_info.instance_of?(Episode))%>
-      <p>New episode of <a href="/episodes/<%=new_info.id%>"><%=Serie.find(Season.find(new_info.season_id).serie_id).title%>(<%=new_info.created_at%>)</a> coming soon </p>
-    <%elsif(new_info.instance_of?(Season))%>
-      <p>New season of  <a href="/seasons/<%=new_info.id%>"><%=Serie.find(new_info.serie_id).title%></a> coming soon</p>
+
+    <% @new_information.sort{|a,b| b.updated_at <=> a.updated_at}.each do |new_info|%>
+
+        <%if(new_info.instance_of?(Serie))%>
+      
+            <p>
+                The infromation for 
+                <a href="series/<%=new_info.id%>">
+                    <%=new_info.title%>
+                </a> 
+                was updated
+            </p>
+     
+        <%elsif(new_info.instance_of?(Comment))%>
+     
+            <p>
+                <%=new_info.user%> write a new comment on <a href="/comments/show/<%=new_info.id%>"><%=Serie.find(new_info.serie_id).title%></a>
+            </p>
+     
+        <%elsif(new_info.instance_of?(Episode))%>
+     
+            <p>
+                New episode of <a href="/episodes/<%=new_info.id%>"><%=Serie.find(Season.find(new_info.season_id).serie_id).title%>(<%=new_info.created_at%>)</a> coming soon 
+            </p>
+    
+        <%elsif(new_info.instance_of?(Season))%>
+    
+            <p>
+                New season of  <a href="/seasons/<%=new_info.id%>"><%=Serie.find(new_info.serie_id).title%></a> coming soon
+            </p>
+    
+        <%end%>
+
     <%end%>
-  <%end%>
+
 <%else%>
-  <p>You don't have news</p>
+
+    <p>You don't have news</p>
+
 <%end%>
