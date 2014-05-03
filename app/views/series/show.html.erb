@@ -1,47 +1,61 @@
-<p id="notice"><%= notice %></p>
+<div class="panel panel-primary">
+	<p class="panel-heading"><%= notice %></p>
 
-<ul class="show-list">
-		<li> Title- <span class = "info"><%= @series.title %></span> </li><br> 
-		<li> Year- <span class = "info"><%= @series.year %></span> </li><br>
-		<li id = "descr-li"> Description-<br> <span class = "info"><%= @series.description %></span> </li>
-</ul>
+	<div class="panel-body">
+		<ul class="list-group">
+			<li class="list-group-item">
+				<%= @series.title %>-
+				<%= @series.year %>
+			</li>
+			<li class="list-group-item">
+				<%= @series.description %>
+			</li>
+			<li class="list-group-item">
+				<%= link_to "List of all seasons", 
+					{controller: "seasons", 
+					action: "list_all_seasons", 
+					id: @series.id},
+					class: "btn btn-primary"
+				%> 
+				<%= link_to 'Synch', 
+					{controller: "series", 
+					action: "synch", 
+					id: @series.id},
+					class: "btn btn-warning"					
+				%> 
+				<%= link_to 'Rewrite', 
+					{controller: "series", 
+					action: "rewrite_serie", 
+					id: @series.id},
+					class: "btn btn-warning" 
+				%>
 
-<%= link_to "List of all seasons", 
-	controller: "seasons", 
-	action: "list_all_seasons", 
-	id: @series.id 
-%> |
-<%= link_to 'Synch', 
-	controller: "series", 
-	action: "synch", 
-	id: @series.id 
-%> |
-<%= link_to 'Rewrite', 
-	controller: "series", 
-	action: "rewrite_serie", 
-	id: @series.id 
-%>
+				<%if(!session[:user_id].nil?)%> 
+				  <% if(UserSubscription.where(user_id:User.find(session[:user_id]).id,serie:@series.id).take.nil?)%>
+				    <%= link_to 'Follow', 
+				    	{controller: "user_subscriptions", 
+				    	action: "create", 
+				    	serie: @series.id},
+						class: "btn btn-warning" %>
+				  <%else%>
+				    <%= link_to 'StopFollow', 
+				    	{controller: "user_subscriptions", 
+				    	action: "delete", 
+				    	serie: @series.id},
+						class: "btn btn-warning" %>
+				  <%end%>
+				<%end%>
+			</li>
+		</ul>
 
-<%if(!session[:user_id].nil?)%> |
-  <% if(UserSubscription.where(user_id:User.find(session[:user_id]).id,serie:@series.id).take.nil?)%>
-    <%= link_to 'Follow', 
-    	controller: "user_subscriptions", 
-    	action: "create", 
-    	serie: @series.id %>
-  <%else%>
-    <%= link_to 'StopFollow', 
-    	controller: "user_subscriptions", 
-    	action: "delete", 
-    	serie: @series.id %>
-  <%end%>
-<%end%>
+		<%= render :file => "comments/show_comments" %>
+		<%= yield :comments_show %>
 
-<%= render :file => "comments/show_comments" %>
-<%= yield :comments_show %>
+		<%= render :file => "comments/post" %>
+		<%= yield :comment_post %>
 
-<%= render :file => "comments/post" %>
-<%= yield :comment_post %>
+	</div>
 
-
+</div>
 
 

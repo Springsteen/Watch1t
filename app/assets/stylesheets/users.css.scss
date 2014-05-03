@@ -1,17 +1,4 @@
 // Place all the styles related to the Users controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-
-ul.menu {
-	padding: 0px;
-	margin-left: 25%;
-	margin-right: 25%; 
-}
-
-ul.menu>li {
-  	display: block;
-}
-
-ul.menu>li div {
-  	border: none;
-}
+@import "bootstrap";

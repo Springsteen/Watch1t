@@ -1,66 +1,78 @@
 <%content_for :user_panel do%> 
-  	<h1>User Panel</h1>
-	
-	<p id="notice"><%=flash[:user_panel_notice]%></p>
-  	
+
   	<%if session[:user_id].nil?%>
-		
-		<%= form_tag("/users/login", method: "post",id:"login") do %>
-			<%= label_tag(:user, "UserName:") %>
-			<%= text_field_tag(:user,"",:required => true) %><br>
-			<%= label_tag(:password, "Password:") %>
-			<%= password_field_tag(:password,"",:required => true) %><br>
-			<%= submit_tag("Login") %>
-			<a href="/users/register"><button class="badbutton">Register</button></a>
-		<%end%>
-
+		<div class="panel panel-primary"> 
+			
+			<p id="notice"><%=flash[:user_panel_notice]%></p>
+  	
+			<%= form_tag("/users/login", method: "post",id:"login") do %>
+				
+					<h3 class="panel-heading">User Panel</h3>
+				
+				<div class="panel-body">
+					<div class="form-group">
+						<%= label_tag(:user, "UserName:") %>
+						<%= text_field_tag(:user,"",:required => true, class: "form-control") %><br>
+					</div>
+					<div class="form-group">
+						<%= label_tag(:password, "Password:") %>
+						<%= password_field_tag(:password,"",:required => true, class: "form-control") %><br>
+					</div>
+				</div>
+				<div class="panel-footer">
+					<%= submit_tag "Login", :class => "btn btn-primary" %>
+					<%= link_to "Register", "/users/register", :class => "btn btn-primary" %>
+				</div>
+			<%end%>
+		</div>
 	<%elsif (!session[:user_id].nil? && 
-			User.find(session[:user_id]).email_check == (1).to_s)%>
+		User.find(session[:user_id]).email_check == (1).to_s)%>
 		
-		<h2>Welcome <%=User.find(session[:user_id]).user%></h2>
-		<ul class="menu">
-	      	<%if(User.find(session[:user_id]).block_code == 8 || 
-	      		request.remote_ip == '127.0.0.1' || 
-	      		request.remote_ip == '0.0.0.0')%>
-	        	<li>
-	        		<%= button_to "User Accounts", 
-						"/users/admin_edit_panel", 
-						:class => "button", 
+		<div class="panel panel-primary">
+			<h2 class="panel-heading">Welcome <%=User.find(session[:user_id]).user%></h2>
+			
+			<div class="panel-body">
+				<div class="btn-group-vertical">
+			      	<%if(User.find(session[:user_id]).block_code == 8 || 
+			      		request.remote_ip == '127.0.0.1' || 
+			      		request.remote_ip == '0.0.0.0')%>
+			        
+			        		<%= button_to "User Accounts", 
+								"/users/admin_edit_panel", 
+								:class => "btn btn-primary", 
+								:method => :get  
+							%><br>
+						
+			      	<%end%>
+			
+					<%= button_to "User's News", 
+						"/users/user_news", 
+						:class => "btn btn-primary", 
 						:method => :get  
-					%>
-				</li>
-	      	<%end%>
-			<li>
-				<%= button_to "User's News", 
-					"/users/user_news", 
-					:class => "button", 
-					:method => :get  
-				%>
-			</li>
-			<li>
-				<%= button_to "Edit Account", 
-					"/users/edit", 
-					:class => "button", 
-					:method => :get  
-				%>
-			</li>
-			<li>
-				<%= button_to "Delete",
-    				@user,
-       				:method=>:delete,
-       				:class=>:destroy,
-       				:confirm=>"Are you sure?"
-       			%>
-       		</li>
-			<li>
-				<%= button_to "Log Out", 
-					"/users/logout", 
-					:class => "button", 
-					:method => :get  
-				%>
-			</li>
-		</ul>
-
+					%><br>
+			
+					<%= button_to "Edit Account", 
+						"/users/edit", 
+						:class => "btn btn-primary", 
+						:method => :get  
+					%><br>
+			
+	       		
+					<%= button_to "Log Out", 
+						"/users/logout", 
+						:class => "btn btn-primary", 
+						:method => :get  
+					%><br>
+					
+					<%= button_to "Delete",
+	    				@user,
+	       				:method=>:delete,
+	       				:class=>"btn btn-danger",
+	       				:confirm=>"Are you sure?"
+		       			%><br>
+				</div>
+			</div>
+		</div>
    	<%else%>
     	
     	<%= form_tag("/users/validate_email", method: "post",id:"validate") do %>
