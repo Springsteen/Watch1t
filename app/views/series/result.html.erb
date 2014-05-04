@@ -1,9 +1,17 @@
-<h1>Search results</h1>
+<div class="panel panel-primary">
+	<h1 class="panel-heading">Search results</h1>
 
-<% @series.each do |s| %>
-	<ul class="list">
-		<li> <%= s.title %>- </li> 
-		<li> <%= s.year %> </li><br>
-		<li id="more-info"> <%= link_to "More Information", controller: "series", action: "show", id: s.id %> </li>
-	</ul><br>
-<% end %>
+	<div class="table-body">
+		<ul class="list-group">
+		<% @series.each do |s| %>
+			<li class="list-group-item">
+				<%= s.title %>-
+				<%= s.year %>
+				<span class="badge">
+				<%= link_to "More Information", controller: "series", action: "show", id: s.id	%>
+				</span>
+			</li> 
+		<% end %>
+		</ul>
+	</div>
+</div>

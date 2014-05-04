@@ -1,5 +1,4 @@
 <%= render :file => "users/user_panel" %>
-<%= render :file => "layouts/navigation_sidebar" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,21 +7,30 @@
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
 </head>
-<body id="body">
-	<header>
-		<img src="/banner1.jpg"/>
+<body>
+	<header class="navbar navbar-fixed-top navbar-inverse">
+		<div class="container">
+            <div class="navbar-header">
+                    <%= link_to "Watch1t", root_url, id: "logo" %>
+            </div>
+            <div>
+                <div class="nav navbar-nav pull-right">
+					<ul class="btn-group">
+						<li class="btn"><%= link_to "Contacts", "/users/send_contact_mail"%></li>
+						<li class="btn"><%= link_to "Search", "/"%></li>
+					</ul>
+				</div>
+            </div>
+        </div>
 	</header>
-	<section>
-		<div class="content">
-			<div class="navbar">
-				<%= yield :navigation_sidebar %>
-			</div>
+	<section class="container">
+		<div class="row">
 
-			<div class="main">
+			<div class="col-md-8">
 				<%= yield %>
 			</div>
 
-			<div class="userpanel">
+			<div class="col-md-4">
 				<%= yield :user_panel %>
 			</div>
 		</div>

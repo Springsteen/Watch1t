@@ -1,6 +1,17 @@
-<table align="center">
-<tr><th>Name</th><th>E-Mail</th><th>Type</th><th>Edit</th></tr>
-<%User.find(:all).each do |user|%>
-  <tr><td><%=user.user%></td><td><%=user.email%></td><td><%=user.block_code%></td><td><a href="/users/admin_edit_panel/<%=user.id%>">Edit</a></td></tr>
-<%end%>
+<table class="table">
+	<tr>
+		<th>Name</th>
+		<th>E-Mail</th>
+		<th>Type</th>
+		<th>Edit</th>
+	</tr>
+
+	<%User.find(:all).each do |user|%>
+		<tr>
+	  		<td><%=user.user%></td>
+	  		<td><%=user.email%></td>
+	  		<td><%=user.block_code%></td>
+	  		<td><a href="/users/admin_edit_panel/<%=user.id%>", class="btn btn-primary">Edit</a></td>
+	  	</tr>
+	<%end%>
 </table>

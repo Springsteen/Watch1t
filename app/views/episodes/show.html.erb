@@ -1,42 +1,49 @@
-<p id="notice"><%= notice %></p>
+<div class="panel panel-primary">
+	
+	<p id="panel-heading"><%= notice %></p>
 
-<ul class="show-epi">
-		<li> <%= @episode.title %> </li> 
-		<li> Air Date /<%= @episode.air_date %>/ </li>
-</ul>
-<ul class="epi-nav-menu">
-	<li>
-		<%= link_to 'Back', 
-			controller: 'episodes', 
-			action: 'list_all_episodes', 
-			id: @episode.season_id
-		%> |
-	</li>
-	<li>
-		<%= link_to 'Synch', 
-			controller: 'episodes', 
-			action: 'synch_air_date', 
-			id: @episode.id
-		%> |
-	</li>
-	<li>
-		<%= link_to 'Find Promo', 
-			controller: 'episodes', 
-			action: 'find_video', 
-			id: @episode.id
-		%>
-	</li>	
-</ul>
+	<div class="panel-body">
+		<ul class="list-group">
+			<li class="list-group-item"> <%= @episode.title %> </li> 
+			<li class="list-group-item"> Air Date /<%= @episode.air_date %>/ </li>
+			<li class="list-group-item">	
+				<%= link_to 'Find Promo', 
+					{controller: 'episodes', 
+					action: 'find_video', 
+					id: @episode.id},
+					:class => "btn btn-primary"
+				%>
 
-<%if(!@episode.torrent_link.nil?)%>
-	<a href="<%=@episode.torrent_link%>" >Download Torrent</a>
-<%end%>
-<%if(!@episode.subs_link.nil?)%>
-	<a href="<%=@episode.subs_link%>" target="_blank">Download Subs</a>
-<%end%>
+				<%= link_to 'Synch', 
+					{controller: 'episodes', 
+					action: 'synch_air_date', 
+					id: @episode.id},
+					:class => "btn btn-warning"
+				%>
+				
+				<%= link_to 'Back', 
+					{controller: 'episodes', 
+					action: 'list_all_episodes', 
+					id: @episode.season_id},
+					:class => "btn btn-warning"
+				%>
+			</li>	
+		</ul>
 
-<%= render :file => "comments/show_comments" %>
-<%= yield :comments_show %>
 
-<%= render :file => "comments/post" %>
-<%= yield :comment_post %>
+		<%if(!@episode.torrent_link.nil?)%>
+			<a href="<%=@episode.torrent_link%>" >Download Torrent</a>
+		<%end%>
+		<%if(!@episode.subs_link.nil?)%>
+			<a href="<%=@episode.subs_link%>" target="_blank">Download Subs</a>
+		<%end%>
+
+		<%= render :file => "comments/show_comments" %>
+		<%= yield :comments_show %>
+
+		<%= render :file => "comments/post" %>
+		<%= yield :comment_post %>
+
+	</div>
+
+</div>

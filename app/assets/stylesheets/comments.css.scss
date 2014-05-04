@@ -1,26 +1,4 @@
 // Place all the styles related to the Comments controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-
-div input,select,textarea{
-	width: 40%;
-}
-
-div button {
-	width: 20%;
-}
-
-form#comment>input[type="submit"] {
-	width: 20%;
-}
-
-ul.comments {
-	list-style-type: none;
-	overflow: hidden;
-}
-
-ul.comments>li{
-	float:left;
-	margin-left: 2%;
-	clear: both;
-}
+@import "bootstrap";

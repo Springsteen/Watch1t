@@ -11,140 +11,31 @@
  *= require_self
  *= require_tree .
  */
-*{
-	color: #FFFFFF;
-	font-size:16px;
-	font-family: "Noto Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
+@import "bootstrap";
 
-a {
-	text-decoration: none;
-}
-
-body{
-	background-color: #FFFFFF;
-	text-align: center;
-}
-
-.content {
-	height: 600px;
-}
-
-.content div {
-	float: left;
-	border: 1px solid #383838; 
-	padding: 5px;
-	margin: 5px;
-	background-color: #585858;
-}
-
-.main {
-	width: 50%;
-	height: 90%;
-	float: left;
+html {
 	overflow-y: scroll;
 }
 
-.main div {
-	width: 80%;
-	position: relative;
-	border: none;
-	margin: 5px 50px 50px 50px;
-	padding: 15px;
+body {
+	padding-top: 100px;
 }
 
-.main div textarea{
-	width: 80%;
-	margin: 2px;
-}
-
-.main div button {
-	width: 20%;
-}
-
-.main div input {
-	width: 80%;
-}
-
-.main div select {
-	width: 80%;
-}
-
-form#login>input[type="submit"] {
-	width: 120px;
-}
-
-form#login>* {
-	width: 250px;
-	margin: 1%;
-}
-
-form#register>input[type="submit"] {
-	width: 100px;
-}
-
-form#register>input, select {
-	width: 250px;
-}
-
-#country {
-	width: 250px;
-}
-
-.userpanel {
-	width: 24%;
-	height: 90%;
+#logo {
 	float: left;
-	border-radius: 0 50px 50px 0;
-}
-
-.userpanel div {
-	border: none;
-	/*override the .content div, so form_tag hidden field border wont appear */
-}
-
-.userpanel ul li {
+	font-size: 2em;
+	color: Grey;
+	text-transform: uppercase;
 	text-decoration: none;
+	letter-spacing: -2px;
+	padding-top: 10px;
+	font-weight: bold;
 }
 
-.navbar {
-	width: 20%;
-	height: 90%;
-	float: left;
-	border-radius: 50px 0 0 50px;
+#logo:hover {
+	color: #ffffff;
 }
 
-footer {
-	clear: both;
-}
-
-input,select,textarea,button{
-	color:black;
-	background-color:#FFFFFF;
-	border-radius:5px;
-	border:2px solid white;
-}
-
-input:focus{
-	border:1px solid #FFFFFF;
-}
-
-.badbutton{
-	width: 120px;
-}
-
-input[type="submit"], button{
-	border-radius: 20px;
-	border: 1px solid #FFFFFF ;
-	border-bottom-width: 4px;
-	width: 120px;
-	margin: 4px;
-}
-
-input[type="submit"]:hover,button:hover{
-	border: 1px solid black;
-	border-radius: 20px;
-	border-bottom-width: 4px;
-	width: 120px;
-	margin: 4px;
+h1, h2, h3, h4, h5, h6 {
+	text-align: center;
 }

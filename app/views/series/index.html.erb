@@ -1,22 +1,19 @@
-<h1>Search for serie</h1>
-<p><%=notice %></p>
-<table>
-  <thead>
-    <tr>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-
-  <tbody>
-
-
-    <%= form_tag :controller => 'series', :action => 'search', :method => 'get' do %>
-      <%= text_field_tag :search, params[:search], :id => 'search_field' %><br>
-      <%= submit_tag "Search", :name => nil %> 
-      <%= button_tag "Reset", type: :reset %>
-    <% end %> 
-
-  </tbody>
-</table>
+<div class="panel panel-primary">
+	<h1 class="panel-heading">Search for serie</h1>
+	<p class="alert alert-warning">
+		<%=notice %>
+	</p>
+	<div class="panel-body">
+		<%= form_tag :controller => 'series', :action => 'search', :method => 'get' do %>
+		  	<div class="form-group">
+		  		<%= text_field_tag :search, params[:search], class: "form-control" %><br>
+		  	</div>
+		  	<div class="panel-footer">
+		  		<div class="panel-body">
+		  			<%= submit_tag "Search", :name => nil, class: "btn btn-primary"%>
+					<%= button_tag "Reset", type: :reset, class: "btn btn-warning" %>
+				</div>
+			</div>
+		<% end %> 
+	</div>
+</div>

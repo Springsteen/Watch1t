@@ -169,6 +169,8 @@ class UsersController < ApplicationController
     def set_user
       if(!session[:user_id].nil?)
         @logged_user=User.find(session[:user_id])
+        @logged_user.last_visit = Date.today
+        @logged_user.save
         if(@logged_user.block_code == 2)
           session[:user_id] = nil;
           flash[:user_panel_notice] = "This account is blocked"

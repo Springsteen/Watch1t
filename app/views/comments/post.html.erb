@@ -1,23 +1,40 @@
-<%content_for :comment_post do%> 
+<div class="panel">
+  <%content_for :comment_post do%> 
 
-  <p id="notice"><%=flash[:notice_comment]%></p>
-  <% if session[:comment_title].nil? %>
-    <%@form_action = "/comments/post"%>
-  <% else %>
-    <%@form_action = "/comments/edit"%>
-  <% end %>
-    <%= form_tag(@form_action, method: "post",id:"post_comment") do %>
-    <%= label_tag(:title, "Title:") %><br>
-    <%= text_field_tag(:title,session[:comment_title],:required => true) %><br>
-    <%= hidden_field_tag(:comment_id,session[:comment_id]) %><br>
-    <%= label_tag(:comment, "Content:") %><br>
-    <%= text_area_tag(:comment,session[:comment_content],:required => true) %><br>
-    <%= hidden_field_tag(:serie,@current_serie,:required => true) %><br>
-    <%= hidden_field_tag(:season,@current_season) %><br>
-    <%= hidden_field_tag(:episode,@current_episode) %><br>
-    <%= submit_tag("Comment") %>
+    <h1 class="panel-heading">Post Comment</h2>
+    <p class="alert alert-success"><%=flash[:notice_comment]%></p>
+    <% if session[:comment_title].nil? %>
+      <%@form_action = "/comments/post"%>
+    <% else %>
+      <%@form_action = "/comments/edit"%>
+    <% end %>
+      
+      <%= form_tag(@form_action, method: "post",id:"post_comment") do %>
+
+        <div class="panel-body">
+          <div class="form-group">
+            <%= label_tag(:title, "Title:") %>
+            <%= text_field_tag :title,session[:comment_title],:required => true, :class => "form-control" %>
+          </div>
+
+          <%= hidden_field_tag(:comment_id,session[:comment_id]) %>
+          
+          <div class="form-group">
+            <%= label_tag(:comment, "Content:") %>
+            <%= text_area_tag :comment,session[:comment_content],:required => true, :class => "form-control" %>
+          </div>
+
+          <%= hidden_field_tag(:serie,@current_serie,:required => true) %><br>
+          <%= hidden_field_tag(:season,@current_season) %><br>
+          <%= hidden_field_tag(:episode,@current_episode) %><br>
+          
+          <div class="panel-footer">   
+            <%= submit_tag "Comment", :class => "btn btn-primary" %>
+          </div>
+        </div>
+    <%end%>
+    <%session[:comment_title] = nil%>
+    <%session[:comment_content] = nil%>
+    <%session[:comment_id] = nil%>
   <%end%>
-  <%session[:comment_title] = nil%>
-  <%session[:comment_content] = nil%>
-  <%session[:comment_id] = nil%>
-<%end%>
+</div>

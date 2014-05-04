@@ -1,26 +1,39 @@
-<h1>Contacts</h1>
-<p id="notice"><%=flash[:contacts] %></p>
+<div class="panel panel-primary"> 
+    <h1 class="panel-heading">Contacts</h1>
+    <p id="notice"><%=flash[:contacts] %></p>
 
-<%if(!session[:user_id].nil?)%>
-    
-    <%you_email = User.find(session[:user_id]).email%>
+    <%if(!session[:user_id].nil?)%>
+        
+        <%you_email = User.find(session[:user_id]).email%>
 
-<%else%>
-    
-    <%you_email = ""%>
+    <%else%>
+        
+        <%you_email = ""%>
 
-<%end%>
+    <%end%>
 
-<div> 
     <%= form_tag("/users/contacts", method: "post",id:"login") do %>
-        <%= label_tag(:user_mail, "Your E-Mail:") %><br>
-        <%= text_field_tag(:user_mail,you_email,:required => true) %><br>
-        <%= label_tag(:admin_email, "Admin:") %><br>
-        <%= select_tag :admin_email,options_for_select(User.where(:block_code => 8).pluck(:email),:required => true) %><br>
-        <%= label_tag(:email_subject, "Subject:") %><br>
-        <%= text_field_tag(:email_subject,"",:required => true) %><br>
-        <%= text_area_tag(:email_content, nil, size: "70x10",:required => true) %><br>
-        <%= submit_tag("Send") %>
-        <a href="/users/register"><button>Register</button></a>
+        
+        <div class="panel-body">    
+            <div class="form-group">
+                <%= label_tag(:user_mail, "Your E-Mail:") %><br>
+                <%= text_field_tag :user_mail,you_email,:required => true, :class => "form-control" %><br>
+            </div>
+            
+            <div class="form-group">
+                <%= label_tag(:admin_email, "Admin:") %><br>
+                <%= select_tag :admin_email,options_for_select(User.where(:block_code => 8).pluck(:email),:required => true), :class => "form-control" %><br>
+            </div>
+
+            <div class="form-group">
+                <%= label_tag(:email_subject, "Subject:") %><br>
+                <%= text_field_tag :email_subject,"",:required => true, :class => "form-control" %><br>
+                <%= text_area_tag :email_content, nil, size: "70x10",:required => true, :class => "form-control" %><br>
+            </div>
+        </div>
+
+        <div class="panel-footer">
+            <%= submit_tag "Send", :class => "btn btn-primary" %>
+        </div>
     <%end%>
 </div>
