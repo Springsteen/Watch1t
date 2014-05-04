@@ -1,32 +1,37 @@
-<% @episodes.each do |e| %>
-	<ul class="list-epi">
-		<li> <%= e.title %> </li>
-		<li> Air Date /<%= e.air_date %>/ </li>
-		<li class="epi-more-info"> 
-			<%= link_to "More Information", 
-				controller: "episodes", 
-				action: "show", 
-				id: e.id 
-			%> 
-		</li>
-		<li class="epi-more-info">
-			<%= link_to 'Back', :back
-			%> 
-		</li>
-		<li class="epi-more-info">
-			<%= link_to 'Synch', 
-				controller: 'episodes', 
-				action: 'synch_air_date', 
-				id: e.id
-			%> 
-		</li>
-		<li class="epi-more-info">
-			<%= link_to 'Find Promo', 
-				controller: 'episodes', 
-				action: 'find_video', 
-				id: e.id
-			%>
-		</li>	
-		<br>
-	</ul>
-<% end %>
+<div class="panel panel-primary">
+	<% @episodes.each do |e| %>
+		<div class="panel-body">
+			<ul class="list-group">
+				<li class="list-group-item"> <%= e.title %> </li>
+				<li class="list-group-item"> Air Date /<%= e.air_date %>/ </li>
+				<li class="list-group-item"> 
+					<%= link_to "More Information", 
+						{controller: "episodes", 
+						action: "show", 
+						id: e.id},
+						:class => "btn btn-primary" 
+					%>
+				
+					<%= link_to 'Find Promo', 
+						{controller: 'episodes', 
+						action: 'find_video', 
+						id: e.id},
+						:class => "btn btn-primary"
+					%>
+				
+					<%= link_to 'Synch', 
+						{controller: 'episodes', 
+						action: 'synch_air_date', 
+						id: e.id},
+						:class => "btn btn-warning"
+					%>
+
+					<%= link_to 'Back', 
+						:back,
+						:class => "btn btn-warning"
+					%> 
+				</li>	
+			</ul>
+		</div>
+	<% end %>
+</div

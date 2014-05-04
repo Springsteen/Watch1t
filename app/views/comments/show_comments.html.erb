@@ -1,36 +1,41 @@
-<%content_for :comments_show do%> 
-  <%@controller=request.original_url.split('/')[3]%>
-  <%if @controller == "series"%>
-    <%@current_serie = params[:id]%>
-    <%@current_season = nil%>
-    <%@current_episode = nil%>
-  <%elsif @controller == "seasons"%>
-    <%@current_serie = Serie.find(Season.find(params[:id]).serie_id).id%>
-    <%@current_season = params[:id]%>
-    <%@current_episode = nil%>
-  <%elsif @controller == "episodes"%>
-    <%@current_serie = Serie.find(Season.find(Episode.find(params[:id]).season_id).serie_id).id%>
-    <%@current_season = Season.find(Episode.find(params[:id]).season_id).id%>
-    <%@current_episode = params[:id]%>
+  <%content_for :comments_show do%> 
+    <%@controller=request.original_url.split('/')[3]%>
+    <%if @controller == "series"%>
+      <%@current_serie = params[:id]%>
+      <%@current_season = nil%>
+      <%@current_episode = nil%>
+    <%elsif @controller == "seasons"%>
+      <%@current_serie = Serie.find(Season.find(params[:id]).serie_id).id%>
+      <%@current_season = params[:id]%>
+      <%@current_episode = nil%>
+    <%elsif @controller == "episodes"%>
+      <%@current_serie = Serie.find(Season.find(Episode.find(params[:id]).season_id).serie_id).id%>
+      <%@current_season = Season.find(Episode.find(params[:id]).season_id).id%>
+      <%@current_episode = params[:id]%>
+    <%end%>
+    <%@comments = Comment.show(@current_serie,@current_season,@current_episode)%>
+    
+<div class="panel">
+    <h1 class="panel-heading">Comments</h1>
+    
+    <% @comments.each do |comment|%>
+      <div class="panel-body">
+        <ul class="list-group">
+          <li class="list-group-item">
+            <%=comment.user%>
+          </li>
+          <li class="list-group-item">
+            <%=comment.content%>
+          </li>
+          <li class="list-group-item">
+            at: <%=comment.created_at.to_date%>
+          </li>
+          <li class="list-group-item">
+            <a href="/comments/edit_menu/<%=comment.id%>", class="btn btn-warning">Edit</a>
+            <a href="/comments/delete/<%=comment.id%>", class="btn btn-danger">Delete</a>
+          </li>
+        </ul>
+      </div>
+    <%end%>
   <%end%>
-  <%@comments = Comment.show(@current_serie,@current_season,@current_episode)%>
-  <h1>Comments</h1>
-  
-  <% @comments.each do |comment|%>
-    <ul class="comments">
-      <li>
-        <%=comment.user%> said: <br>
-      </li>
-      <li>
-        <%=comment.content%>
-      </li>
-      <li>
-        at: <%=comment.created_at.to_date%>
-      </li><br>
-      <li class="comnt-menu">
-        <a href="/comments/edit_menu/<%=comment.id%>">Edit</a> |
-        <a href="/comments/delete/<%=comment.id%>">Delete</a>
-      </li>
-    </ul>
-  <%end%>
-<%end%>
+</div>

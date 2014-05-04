@@ -1,23 +1,28 @@
-<% @seasons.each do |s| %>
-	<ul class= "ses-list">
-		<li>
-			Season 
-			<%= s.season%>
-		</li>
-		
-		<li>
-			Episodes in the season - 
-			<%= Episode.where(season_id: s.id).count%>
-		</li>
-		
-		<!--<li>Created At: <%= s.created_at.to_formatted_s(:long)%></li>-->
-		
-		<li id="ses-more-info"> 
-			<%= link_to "List of all episodes", 
-				controller: "episodes", 
-				action: "list_all_episodes", 
-				id: s.id 
-			%>
-		</li><br>
-	</ul>
-<% end %>
+<div class="panel panel-primary">
+	<% @seasons.each do |s| %>
+		<div class="panel-body"
+			<ul class= "list-group">
+				<li class="list-group-item">
+					Season 
+					<%= s.season%>
+				</li>
+				
+				<li class="list-group-item">
+					Episodes in the season - 
+					<%= Episode.where(season_id: s.id).count%>
+				</li>
+				
+				<!--<li>Created At: <%= s.created_at.to_formatted_s(:long)%></li>-->
+				
+				<li  class="list-group-item"> 
+					<%= link_to "List of all episodes", 
+						{controller: "episodes", 
+						action: "list_all_episodes", 
+						id: s.id},
+						:class => "btn btn-primary"
+					%>
+				</li><br>
+			</ul>
+		</div>
+	<% end %>	
+</div>
