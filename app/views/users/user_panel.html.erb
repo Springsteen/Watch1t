@@ -1,32 +1,9 @@
 <%content_for :user_panel do%> 
-<<<<<<< HEAD
-<%session[:user_id] = nil;%>
-  	<h1>User Panel</h1>
-	
-	<p id="notice"><%=flash[:user_panel_notice]%></p>
-  	
-  	<%if session[:user_id].nil?%>
-		
-		<%= form_tag("/users/login", method: "post",id:"login") do %>
-			<%= label_tag(:user, "UserName:") %>
-			<%= text_field_tag(:user,"",:required => true) %><br>
-			<%= label_tag(:password, "Password:") %>
-			<%= password_field_tag(:password,"",:required => true) %><br>
-			<%= submit_tag("Login") %>
-			<a href="/users/register"><button class="badbutton">Register</button></a>
-		<%end%>
-=======
->>>>>>> b5bcae26509189b061e4df31a52e4ab49edcf2ba
-
   	<%if session[:user_id].nil?%>
 		<div class="panel panel-primary"> 
-			
 			<p id="notice"><%=flash[:user_panel_notice]%></p>
-  	
-			<%= form_tag("/users/login", method: "post",id:"login") do %>
-				
-					<h3 class="panel-heading">User Panel</h3>
-				
+      <%= form_tag("/users/login", method: "post",id:"login") do %>
+				<h3 class="panel-heading">User Panel</h3>
 				<div class="panel-body">
 					<div class="form-group">
 						<%= label_tag(:user, "UserName:") %>
@@ -45,61 +22,48 @@
 		</div>
 	<%elsif (!session[:user_id].nil? && 
 		User.find(session[:user_id]).email_check == (1).to_s)%>
-		
 		<div class="panel panel-primary">
 			<h2 class="panel-heading">Welcome <%=User.find(session[:user_id]).user%></h2>
-			
 			<div class="panel-body">
 				<div class="btn-group-vertical">
-			      	<%if(User.find(session[:user_id]).block_code == 8 || 
-			      		request.remote_ip == '127.0.0.1' || 
-			      		request.remote_ip == '0.0.0.0')%>
-			        
-			        		<%= button_to "User Accounts", 
+			    <%if(User.find(session[:user_id]).block_code == 8 || request.remote_ip == '127.0.0.1' || request.remote_ip == '0.0.0.0') %>
+			      <%= button_to "User Accounts", 
 								"/users/admin_edit_panel", 
 								:class => "btn btn-primary", 
 								:method => :get  
-							%><br>
+						%><br>
 						
-			      	<%end%>
-			
-					<%= button_to "User's News", 
+          <%end%>
+          <%= button_to "User's News", 
 						"/users/user_news", 
 						:class => "btn btn-primary", 
 						:method => :get  
 					%><br>
-			
 					<%= button_to "Edit Account", 
 						"/users/edit", 
 						:class => "btn btn-primary", 
 						:method => :get  
 					%><br>
-			
-	       		
 					<%= button_to "Log Out", 
 						"/users/logout", 
 						:class => "btn btn-primary", 
 						:method => :get  
 					%><br>
-					
 					<%= button_to "Delete",
 	    				@user,
 	       				:method=>:delete,
 	       				:class=>"btn btn-danger",
 	       				:confirm=>"Are you sure?"
-		       			%><br>
+		      %><br>
 				</div>
 			</div>
 		</div>
    	<%else%>
-    	
     	<%= form_tag("/users/validate_email", method: "post",id:"validate") do %>
       		<%= label_tag(:validate_mail_code, "Validate Code:") %>
       		<%= text_field_tag(:validate_mail_code,"",:required => true) %><br>
       		<%= submit_tag("Validate") %>
 			<button class="badbutton"><a href="/users/logout">LogOut</a></button>
-    	<% end %>
-	
+    	<%end%>
 	<%end%>
-
-<% end %>
+<%end%>

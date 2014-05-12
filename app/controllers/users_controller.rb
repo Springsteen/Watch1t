@@ -121,7 +121,7 @@ class UsersController < ApplicationController
     end
   end
   def search_torents
-    User.update_links()
+    ZamundaParser.update_links()
   end
   def admin_edit_panel
     @user = User.find(params[:user_id])

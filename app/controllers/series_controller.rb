@@ -42,15 +42,13 @@ class SeriesController < ApplicationController
         s.serie_id = @series.id
         s.season = ses.season_number.to_i
         s.save
-        i=1
         ses.episodes.each do |e|
           epi = Episode.new
           epi.season_id = s.id
-          epi.title = ses.episode(i.to_i).title.to_s
+          epi.title = e.title.to_s
           # epi.air_date = ses.episode(i.to_i).air_date.to_date
           epi.episode = e.episode.to_i
           epi.save
-          i+=1
         end     
       end
       
@@ -86,22 +84,20 @@ class SeriesController < ApplicationController
     @all_serie.each do |imdb_serie_id|
       new_serie = Imdb::Serie.new(imdb_serie_id)
       if(new_serie.year != 0)
-        created_serie = ""
-        if(Serie.where(imdb_id:imdb_serie_id).take.nil?)
-          created_serie = Serie.new(:title=>new_serie.title.to_s,:year=>new_serie.year.to_i,:description=>new_serie.plot.to_s,:imdb_id=>imdb_serie_id).save
-        else
           created_serie = Serie.where(imdb_id:imdb_serie_id).take
+        if(Serie.where(imdb_id:imdb_serie_id).take.nil?)
+          created_serie = Serie.new(:title=>new_serie.title.to_s,:year=>new_serie.year.to_s,:description=>new_serie.plot.to_s,:imdb_id=>imdb_serie_id)
+          created_serie.save
         end
         new_serie.seasons.each do |imdb_season|
-          crated_season = ""
-          if(Season.where(season:imdb_season.season_number.to_i,serie_id:created_serie.id).take.nil?)
-            created_season = Season.new(:serie_id=>created_serie.id,:season=>imdb_season.season_number.to_i).save
-          else
-            crated_season = Season.where(season:imdb_season.season_number.to_i,serie_id:created_serie.id).take
+          created_season = Season.where(season:imdb_season.season_number.to_i,serie_id:created_serie.id.to_i).take
+          if(Season.where(season:imdb_season.season_number.to_i,serie_id:created_serie.id.to_i).take.nil?)
+            created_season = Season.new(:serie_id=>created_serie.id.to_i,:season=>imdb_season.season_number.to_i)
+            created_season.save
           end
           imdb_season.episodes.each_with_index do |episode,i=1|
-            if(Episode.where(episode:episode.episode.to_i,season_id:crated_season.id).take.nil?)
-              Episode.new(:episode=>episode.episode,:season_id=>crated_season.id,:title=>episode.title).save
+            if(Episode.where(episode:episode.episode.to_i,season_id:created_season.id.to_i).take.nil?)
+              Episode.new(:episode=>episode.episode,:season_id=>created_season.id.to_i,:title=>episode.title).save
             end
           end
         end
@@ -155,13 +151,14 @@ private
     end
     def find_all_series()
       series = Array.new
-      for i in 2012..2014
+      # for i in 2012..2014
+        i=2014
         Imdb::Search.new(i.to_s).movies().each do |movie|
           if(movie.title =~ /(TV Series)/) and (movie.year.to_i != 0)
             series << movie.id
           end
         end
-      end
+      # end
       return series.uniq{|x| x}
     end
 end
