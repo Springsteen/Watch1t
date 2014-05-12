@@ -7,10 +7,15 @@
 			<li class="list-group-item">
 				<%= s.title %>-
 				<%= s.year %>
-				<span class="badge">
-				<%= link_to "More Information", controller: "series", action: "show", id: s.id	%>
-				</span>
-			</li> 
+			</li>
+			<li class="list-group-item">
+			<%= link_to "More", 
+					{controller: "series", 
+					action: "show", 
+					id: s.id},
+					:class => "btn btn-warning"	
+				%> 
+			</li><br>
 		<% end %>
 		</ul>
 	</div>
