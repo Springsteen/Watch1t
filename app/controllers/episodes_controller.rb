@@ -101,7 +101,46 @@ class EpisodesController < ApplicationController
       format.json { head :no_content }
     end
   end
-
+  def set_episode_torrent_link
+    t = TorrentApi.new
+    Episode.where(:torrent_link=>nil).each do |episode|
+      # episode = Episode.find(1)
+      serie_name = Serie.find(Season.find(episode.season_id).serie_id).title
+      episode_season = Season.find(episode.season_id).season
+      episode_number = episode.episode
+      if(episode_season <= 0)
+        next;
+      else
+        episode_season = episode_season.to_s
+      end
+      
+      if(episode_number <= 0)
+        next;
+      else
+        episode_number = episode_number.to_s
+      end
+      
+      if(episode_season.length < 2)
+        episode_season = '0'+episode_season
+      end
+      if(episode_number.length < 2)
+        episode_number = '0'+episode_number
+      end
+      t.search_term = "#{serie_name} S#{episode_season}E#{episode_number}"
+      found = t.search
+      if(found.nil?)
+        next;
+      end 
+      if(found.count > 0)
+        link = found.first.link
+      else
+        next;
+      end
+      episode.update(:torrent_link => link)
+      episode.update(:subs_link => "http://subsunacs.net/search.php?p=1&t=1&m=#{serie_name.gsub(" ","+")}")
+    end
+    redirect_to "/"
+  end
   private
     def parse_info e
       ses = Season.where(id: e.season_id).take

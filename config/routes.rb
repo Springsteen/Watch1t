@@ -19,7 +19,6 @@ Watch1t::Application.routes.draw do
   match 'users/logout', via: [:get]
   match 'users/destroy', via: [:get]
   match 'users/validate_email', via: [:post]
-  get 'users/search_torents' => 'users#search_torents'
   get 'users/user_news' => 'users#user_news'
 
   get 'user_subscriptions/create/:serie' => 'user_subscriptions#create'
@@ -36,6 +35,7 @@ Watch1t::Application.routes.draw do
 
   get 'list_seasons' => 'seasons#list_all_seasons'
   match 'seasons/list_seasons', via: [:post]
+  get 'seasons/update_torrent' => 'seasons#set_seasons_torrent_link'
   get 'seasons/:id' => 'seasons#show'
   match 'seasons/show',  via: [:get]
   get 'seasons/:id/update' => 'seasons#synch'
@@ -43,6 +43,7 @@ Watch1t::Application.routes.draw do
   # ADD NEW SEASON PATH ONLY FOR ADMIN
 
   get 'list_episodes' => 'episodes#list_all_episodes'
+  get 'episodes/update_torrent' => 'episodes#set_episode_torrent_link'
   match 'episodes/list_episodes', via: [:post]
   get 'episodes/:id' => 'episodes#show'
   match 'episodes/show',  via: [:get]

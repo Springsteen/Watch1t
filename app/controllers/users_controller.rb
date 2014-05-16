@@ -22,13 +22,14 @@ class UsersController < ApplicationController
           flash[:user_panel_notice] = "Please validate your E-Mail."
           redirect_to :back
         end
+        redirect_to "/users/user_news"
       end
   end
   
   #GET /user/logout
   def logout
     session[:user_id] = nil;
-      redirect_to "/users"
+      redirect_to "/"
   end
 
   def validate_email
@@ -40,7 +41,7 @@ class UsersController < ApplicationController
         redirect_to :back
       else
         @logged_user.update(:email_check => (1).to_s);
-        redirect_to :back
+        redirect_to "/users/user_news"
       end
   end
   
@@ -119,9 +120,6 @@ class UsersController < ApplicationController
       flash[:contacts] = "OK"
       redirect_to :back
     end
-  end
-  def search_torents
-    ZamundaParser.update_links()
   end
   def admin_edit_panel
     @user = User.find(params[:user_id])

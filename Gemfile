@@ -57,3 +57,4 @@ gem 'delayed_job_active_record'
 
 gem 'daemons'
 gem 'mechanize', '~> 2.6.0'
+gem 'torrent_api', '~> 0.2.8'

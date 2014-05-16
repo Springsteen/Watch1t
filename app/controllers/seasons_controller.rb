@@ -92,6 +92,35 @@ class SeasonsController < ApplicationController
       format.json { head :no_content }
     end
   end
+  def set_seasons_torrent_link 
+    t = TorrentApi.new
+    Season.where(:torrent_link=>nil).each do |season|
+      # season = Episode.find(1)
+      serie_name = Serie.find(season.serie_id).title
+      season_number = season.season
+      if(season_number <= 0)
+        next;
+      else
+        season_number = season_number.to_s
+      end
+      if(season_number.length < 2)
+        season_number = '0'+season_number
+      end
+      t.search_term = "#{serie_name} Season #{season_number} Complete"
+      found = t.search
+      if(found.nil?)
+        next;
+      end 
+      if(found.count > 0)
+        link = found.first.link
+      else
+        next;
+      end
+      season.update(:torrent_link => link)
+      season.update(:subs_link => "http://subsunacs.net/search.php?p=1&t=1&m=#{serie_name.gsub(" ","+")}")
+    end
+    redirect_to "/"
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
