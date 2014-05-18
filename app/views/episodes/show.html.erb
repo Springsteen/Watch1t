@@ -33,9 +33,9 @@
 
 		<%if(!@episode.torrent_link.nil?)%>
 			<a href="<%=@episode.torrent_link%>" >Download Torrent</a>
-		<%end%>
-		<%if(!@episode.subs_link.nil?)%>
-			<a href="<%=@episode.subs_link%>" target="_blank">Download Subs</a>
+      <%if(!@episode.subs_link.nil?)%>
+        <a href="<%=@episode.subs_link%>" target="_blank">Download Subs</a>
+      <%end%>
 		<%end%>
 
 		<%= render :file => "comments/show_comments" %>
